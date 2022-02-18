@@ -1,4 +1,14 @@
 # Schedule
+
+<style>
+    .taskText{
+        color: black;
+    }
+    #graph-div{
+        fill: rgba(0.2,0.2,0.2,0.5)
+    }
+</style>
+
 ```mermaid
 gantt
     title Bachelor's Thesis Schedule
