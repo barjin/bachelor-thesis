@@ -1,20 +1,10 @@
 # Schedule
 
-<style>
-    .taskText{
-        color: black;
-    }
-    #graph-div{
-        fill: rgba(0.2,0.2,0.2,0.5)
-    }
-</style>
-
 ```mermaid
 gantt
     title Bachelor's Thesis Schedule
     dateFormat DD.MM.YYYY
     axisFormat %d.%m.%Y
-    excludes weekdays saturday,sunday
 
     section Writing
     Deadline: milestone, 12.04.2022, 0d
