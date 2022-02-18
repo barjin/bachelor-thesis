@@ -1,4 +1,5 @@
-# Schedule
+# Schedule and achievements
+This part of the project documentation consists of a **schedule** and a **list of project-related achievements** with links to them.
 
 ```mermaid
 gantt
@@ -21,7 +22,9 @@ gantt
     User documentation: 5d
     Programmer documentation:7d
     Admin documentation: 3d
+
     section Reviews/Analysis
+
     User Role Analysis: analysis_roles, after environment, 2d
     Use Case Analysis: after analysis_roles, 2d
     User Scenarios: analysis_scenarios, after analysis_roles, 2d
@@ -29,3 +32,10 @@ gantt
     Implementation review: implementation_review, after design_review, 5d
     Testing review: tests_review, after implementation_review, 3d 
 ```
+
+## Achievements
+- Environment setup
+    - ✅ [GitHub repository](./README.md)
+    - ✅ [Schedule](.)
+    - ✅ [Latex project initialized](./thesis)
+    - ❔ Github Actions for compiling Latex
