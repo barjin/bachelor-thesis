@@ -1,3 +1,9 @@
+# Compiled output files (get compiled in a GH action)
+**/thesis.pdf
+**/abstract.pdf
+
+## Generic Tex .gitignore file follows.
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

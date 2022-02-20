@@ -1,0 +1,21 @@
+name: Build Latex Project
+on: 
+  push:
+    paths:
+      thesis/**
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Git repository
+        uses: actions/checkout@v2
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: barjin/build-mff-tex:latest
+          options: -v ${{ github.workspace }}/thesis:/root/thesis
+          run: make 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: thesis
+          path: ${{ github.workspace }}/thesis/thesis.pdf
+
