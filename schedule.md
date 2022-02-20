@@ -10,8 +10,8 @@ gantt
     section Writing
     Deadline: milestone, 12.04.2022, 0d
 
-    Setup Environment (LaTex, GitHub): active, environment, 18.02.2022, 2d
-    Introduction: introduction, after environment, 3d
+    Setup Environment (LaTex, GitHub): done, environment, 18.02.2022, 2d
+    Introduction: active, introduction, after environment, 3d
     Competing solutions: 4d
     Analysis: after introduction, 4d
     Design - file syntax: syntax, after design_review, 3d
@@ -25,7 +25,7 @@ gantt
 
     section Reviews/Analysis
 
-    User Role Analysis: analysis_roles, after environment, 2d
+    User Role Analysis: active, analysis_roles, after environment, 2d
     Use Case Analysis: after analysis_roles, 2d
     User Scenarios: analysis_scenarios, after analysis_roles, 2d
     Design review: design_review, after analysis_scenarios, 3d
@@ -34,8 +34,8 @@ gantt
 ```
 
 ## Achievements
-- Environment setup
+- ✅ Environment setup
     - ✅ [GitHub repository](./README.md)
     - ✅ [Schedule](.)
     - ✅ [Latex project initialized](./thesis)
-    - ❔ Github Actions for compiling Latex
+    - ✅ [Github Actions for compiling Latex](./actions/workflows/build_latex.yml)
