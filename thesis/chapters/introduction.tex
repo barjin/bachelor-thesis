@@ -1,2 +1,30 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
+
+\defcitealias{MRF}{MFR}
+\defcitealias{APP}{APP}
+
+In the past few years, the web scraping and data extraction industry became much more prominent, as the need for data rises among all **parts of IT. 
+The industry is expected to grow at $13.1\%$ CAGR, reaching a market value of USD $948.60$ Million \citepalias{MRF}.
+\par
+Despite the immense size of this evergrowing industry, there is still no standardized universal format for storing automated workflows. 
+Most automation developers produce executable code in general purpose programming languages, with \textit{Java}, \textit{JavaScript}, and \textit{Python} being the most prominent ones \citepalias{APP}.
+\par
+This approach poses a certain security risk, as the user of such automation needs to run untrusted code. 
+It also creates a barrier to entry for beginners without the required programming knowledge. 
+Furthermore, the absence of a standardized format hinders the collaboration between developers.
+\section*{Thesis goals}
+The goal of this thesis is to develop a human-readable, declarative format for storing and creating web automations, with an interpreter of this format and a visual editor, allowing less technical users to create and maintain automations in this format.
+\par
+Such format should allow for development of resilient, reusable, and comprehensive workflow definitions. 
+It should also be machine-readable, parsable and editable, ultimately leading to a simpler adoption of the format by developers of third-party software.
+\par
+This format should also be application-oblivious i.e. not too oriented on automating only web-related workflows.
+The definition of the format should allow developers to create interpreters for this format for handling different automation tasks, still maintaining the same syntax.
+The presented workflow interpreter should then be able to parse, validate and execute the defined web-related workflows. 
+It should also implement a basic programmable interface to allow other developers to use the interpreter from their own software.
+\par
+Implemented as a web application, the workflow editor should be able to generate valid workflow files, allowing the user to create the workflow definitions without knowing the exact internal syntax of the definition format.
+The editor should implement a user-friendly, with an intuitive \Ac{GUI} and a steep learning curve.
+The ultimate goal of the editor is to shield the user from the programming part of the automation task completely, leaving them with a simple yet powerful graphical tool.
+\section*{Related Work}

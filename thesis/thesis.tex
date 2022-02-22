@@ -33,7 +33,6 @@
 
 %% Prefer Latin Modern fonts
 \usepackage{lmodern}
-
 %% Further useful packages (included in most LaTeX distributions)
 \usepackage{amsmath}        % extensions for typesetting of math
 \usepackage{amsfonts}       % math fonts
@@ -49,8 +48,10 @@
 \usepackage{booktabs}       % improved horizontal lines in tables
 \usepackage{paralist}       % improved enumerate and itemize
 \usepackage{xcolor}         % typesetting in color
-
+\usepackage{url}
 %%% Basic information on the thesis
+
+\usepackage{acronym}
 
 % Thesis title in English (exactly as in the formal assignment)
 \def\ThesisTitle{Declarative Web Automation Toolkit}
@@ -132,6 +133,8 @@ Abstract.
 %%% Abbreviations used in the thesis, if any, including their explanation
 %%% In mathematical theses, it could be better to move the list of abbreviations to the beginning of the thesis.
 \chapwithtoc{List of Abbreviations}
+
+\include{chapters/abbreviations}
 
 %%% Attachments to the bachelor thesis, if any. Each attachment must be
 %%% referred to at least once from the text of the thesis. Attachments
