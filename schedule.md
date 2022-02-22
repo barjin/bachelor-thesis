@@ -39,3 +39,10 @@ gantt
     - ✅ [Schedule](.)
     - ✅ [Latex project initialized](./thesis)
     - ✅ [Github Actions for compiling Latex](./actions/workflows/build_latex.yml)
+
+- Introduction
+    - ✅ [Basics, reasons for the work](./thesis/chapters/introduction.tex)
+    - Competition analysis
+
+- Analysis
+    ... ?
