@@ -53,6 +53,8 @@
 
 \usepackage{acronym}
 
+\newcommand\short{}
+
 % Thesis title in English (exactly as in the formal assignment)
 \def\ThesisTitle{Declarative Web Automation Toolkit}
 
@@ -107,11 +109,14 @@ Abstract.
 
 % Title page and various mandatory informational pages
 \begin{document}
-\include{title}
 
-%%% A page with an automatically generated table of contents of the bachelor thesis
+\unless\ifdefined\short
+	\include{title}
 
-\tableofcontents
+	%%% A page with an automatically generated table of contents of the bachelor thesis
+
+	\tableofcontents
+\fi
 
 %%% Each chapter is kept in a separate file
 \include{chapters/introduction}
