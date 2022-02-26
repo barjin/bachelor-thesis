@@ -13,5 +13,5 @@ abstract.pdf: abstract.tex abstract.xmpdata
 	pdflatex $<
 
 clean:
-	rm -f *.log *.dvi *.aux *.toc *.lof *.lot *.out *.bbl *.blg *.xmpi
+	find . -type f -regex '.*\.\(log\|dvi\|aux\|toc\|lof\|lot\|out\|bbl\|blg\|xmpi\)' -delete
 	rm -f thesis.pdf abstract.pdf
