@@ -1,0 +1,30 @@
+\defcitealias{PPatch21}{PPatch21}
+\defcitealias{PReadme22}{PReadme22}
+
+\section*{Related Work}
+As of now, there are already numerous solutions for automating web actions on the market. 
+A majority of those uses existing web browsers and offer a programmable interface for simulating user input.
+
+\textbf{Cypress} is a \ac{E2E} Javascript testing framework containing various assertions for \ac{QA} testing of webpages.
+It supports multiple web browsers and offers its own UI and toolkit for test programming and running. 
+Due to its strong orientation towards testing, it does not provide much methods for data extraction and crawling.
+
+\textbf{Selenium WebDriver} is a fairly popular tool among web UI testers, as it offers a wide variety of methods for \ac{QA} testing.
+Distributed as a multilanguage library, Selenium implements a high-level interface for controlling web browsers from code.
+% Aside from regular commercial web browsers, Selenium also implements interfaces for PhantomJS and HTMLUnit, both headless scriptable browsers used as a lightweight alternative to regular browsers.
+
+\textbf{Puppeteer} is a low-level library used for web browser automation. 
+Unlike Cypress and Selenium, Puppeteer supports Chrome (or Chromium) as its only backend browser as of now (\today).
+
+The communication with the browser is implemented via WebSockets and the DevTools Protocol, a Chromium-specific set of commands.
+This allows Puppeteer to exceed Selenium both in stability and performance, sporting up to $17\%$ speedup in benchmarks \citepalias{Chck21}.
+
+\textbf{Playwright} is another low-level library multilanguage library offering programmable ways of controlling web browser.
+For browser communication, Playwright uses similiar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today).
+
+Due to differences between browsers and partial incompatibility of protocols, Playwright is distributed with patched versions of Firefox and Webkit \citepalias{PPatch21}.
+Stock versions of Chromium based browsers (Google Chrome, Microsoft Edge) are supported. \citepalias{PReadme22}
+
+\vspace{\baselineskip}
+
+All the aforementioned examples however require programming, which can mean a significant barrier to entry for beginners.
