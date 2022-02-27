@@ -20,10 +20,10 @@ The communication with the browser is implemented via WebSockets and the DevTool
 This allows Puppeteer to exceed Selenium both in stability and performance, sporting up to $17\%$ speedup in benchmarks \citepalias{Chck21}.
 
 \textbf{Playwright} is another low-level library multilanguage library offering programmable ways of controlling web browser.
-For browser communication, Playwright uses similiar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today).
+For browser communication, Playwright uses similar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today).
 
 Due to differences between browsers and partial incompatibility of protocols, Playwright is distributed with patched versions of Firefox and Webkit \citepalias{PPatch21}.
-Stock versions of Chromium based browsers (Google Chrome, Microsoft Edge) are supported. \citepalias{PReadme22}
+Stock versions of Chromium-based browsers (Google Chrome, Microsoft Edge) are supported. \citepalias{PReadme22}
 
 \emptyline
 
@@ -32,4 +32,22 @@ Beside these examples, there are also other solutions, allowing the users to cre
 
 \emptyline
 
-\textbf{Dexi.io} is one of such services. Accessible as a web application, it provides the user with a web based browser recorder, removing the 
+\textbf{Dexi.io} is one of such services. 
+Accessible as a web application, it provides the user with a web-based browser recorder, removing both the need for programming and package installation.
+Dexi.io \ac{GUI} editor allows for creating branches based on user-specified conditions.
+
+Dexi.io also serves as an execution platform for these recordings. 
+While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
+
+The recorder app suffers from problems stemming from its web nature, namely \acs{CORS}-related issues, being targetted by anti-scraping measures and worse responsiveness.
+
+\textbf{Browse.ai} serves similar purpose. 
+Utilizing a Chrome-only browser extension for workflow recording, Browser.ai offers arguably better \ac{UX} than Dexi.io with more accurate web page representation.
+
+The execution of Browser.ai recordings is available only through the associated web service without any export option, causing even stronger vendor lock-in than Dexi.io.
+
+\textbf{Chrome Recorder} is a preview feature of the Google Chrome web browser (as of \today).
+Embedded into the browser itself, the Chrome recorder provides the best performance and responsiveness of the mentioned examples. 
+
+Since this browser feature is targetted mainly at the \ac{QA} testing community, the recorder offers detailed perfomance measurement features.
+For the same reason, data extraction methods are completely missing, rendering the Chrome Recorder unusable for web scraping use cases.
