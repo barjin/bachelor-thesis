@@ -1,17 +1,70 @@
 \defcitealias{PPatch21}{PPatch21}
 \defcitealias{PReadme22}{PReadme22}
+\defcitealias{CyprCond}{CyprCond}
+\defcitealias{SelenCF}{SelenCF}
 
 \section{Existing solutions}
 As of now, there are already numerous solutions for automating web actions on the market. 
 A majority of those uses existing web browsers and offer a programmable interface for simulating user input.
 
+\multilinebox{
+    \textbf{Evaluation criteria}        
+    \par
+    To provide a comprehensive comparison, the existing solutions will be evaluated based on several common criteria. Those are:
+    \begin{flushright}
+        \begin{minipage}[t]{0.95\textwidth}
+            \textbf{Ease of use}: \Ac{UX} quality, evaluated based on different user knowledge levels.
+            \smallskip
+        
+            \textbf{Universality}: How applicable is this solution for different web automation use cases, i.e. \ac{UI} testing, web scraping, web crawling...
+            \smallskip
+        
+            \textbf{Automation resilience}: Is the automation capable of dealing with unexpected situations? Does the solution allow for conditional decisions?
+            \smallskip
+        
+            \textbf{Open format}: Whether or not does the solution publish open documentation of its internal format.
+            \smallskip
+        \end{minipage}
+    \end{flushright}
+}
+\emptyline
+
+In general, the existing automation solutions can be divided into two groups, based on the \ac{UX} quality and granularity of allowed actions. 
+The first group consists of programmable solutions targetted at experienced users:
+
+\emptyline
+
 \textbf{Cypress} is a \ac{E2E} Javascript testing framework containing various assertions for \ac{QA} testing of webpages.
 It supports multiple web browsers and offers its own UI and toolkit for test programming and running. 
 Due to its strong orientation towards testing, it does not provide much methods for data extraction and crawling.
+\begin{itemize}
+    \item Ease of use - Creating Cypress automations requires JavaScript programming knowledge. Cypress also contains a graphical recorder \textit{Cypress Studio} as an experimental feature.
+    \item Universality - As a testing framework, Cypress offers methods for web-related assertions and \acs{DOM} queries.
+    Because of its library nature, writing crawlers and scrapers is also possible, despite having very little support from the library's side.
+    \item Automation resilience -
+    Since Cypress has been designed as a testing framework, i.e. to be used on one's own infrastructure, there is no inbuilt support for handling unexpected states.
+    The official documentation speaks about modifying the (tested) server itself and explains the usual ways of handling exceptions in JavaScript. \citepalias{CyprCond}
+    \item Open format - The automations written using Cypress are effectively JS programs stored as source code.
+\end{itemize}
 
-\textbf{Selenium WebDriver} is a fairly popular tool among web UI testers, as it offers a wide variety of methods for \ac{QA} testing.
+\textbf{Selenium WebDriver} is a fairly popular tool among web UI testers, as it offers a wide variety of selector engines and comprehensive method naming.
 Distributed as a multilanguage library, Selenium implements a high-level interface for controlling web browsers from code.
 % Aside from regular commercial web browsers, Selenium also implements interfaces for PhantomJS and HTMLUnit, both headless scriptable browsers used as a lightweight alternative to regular browsers.
+\begin{itemize}
+    \item Ease of use - Creating Selenium WebDriver automations requires knowledge of at least one of the following programming languages: \textit{Ruby, Java, Python, JavaScript, C\#}.
+    
+    Selenium also offers an \ac{IDE} with low-code/record and playback tools. This \ac{IDE} is implemented as a Firefox and Chrome extension.
+
+    \item Universality - Selenium WebDriver is quite low-level, enough to handle crawling, scraping and testing use cases alike. 
+    On the other hand, there are no native methods for testing, letting the user work with external testing frameworks.
+
+    \item Automation resilience -
+    In the Selenium WebDriver library, there is no inbuilt support for handling unexpected states.
+    The Selenium IDE allows for drag-and-drop branching, which corresponds to writing conditions manually. \citepalias{SelenCF}
+    \item Open format - The automations written using Selenium are executable programs. 
+    Selenium IDE allows the users to export the created workflows as code in any of the supported languages, using various popular testing frameworks (e.g. Mocha for JavaScript, JUnit for Java etc.)
+\end{itemize}
+
 
 \textbf{Puppeteer} is a low-level library used for web browser automation. 
 Unlike Cypress and Selenium, Puppeteer supports Chrome (or Chromium) as its only backend browser as of now (\today).
@@ -19,16 +72,45 @@ Unlike Cypress and Selenium, Puppeteer supports Chrome (or Chromium) as its only
 The communication with the browser is implemented via WebSockets and the DevTools Protocol, a Chromium-specific set of commands.
 This allows Puppeteer to exceed Selenium both in stability and performance, sporting up to $17\%$ speedup in benchmarks \citepalias{Chck21}.
 
-\textbf{Playwright} is another low-level library multilanguage library offering programmable ways of controlling web browser.
-For browser communication, Playwright uses similar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today).
+\begin{itemize}
+    \item Ease of use - Using Puppeteer for creating web automations requires knowledge of JavaScript.
 
-Due to differences between browsers and partial incompatibility of protocols, Playwright is distributed with patched versions of Firefox and Webkit \citepalias{PPatch21}.
+    \item Universality - Just like Selenium WebDriver, Puppeteer provides a low-level browser control, which makes it an universal tool for testing, scraping and crawling web. 
+    
+    On the other hand, users requiring high-level abstractions for testing or data extraction must resort to using third-party libraries or write this functionality themselves.
+
+    \item Automation resilience -
+    As stated before, Puppeteer is a low-level library for web browser automation. All conditional branching must be handled by the programmer themselves.
+    \item Open format - The automations written using Puppeteer are executable JavaScript programs.
+\end{itemize}
+
+\textbf{Playwright} is another low-level library multilanguage library offering programmable ways of controlling a web browser.
+For browser communication, Playwright uses similar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today) and has official bindings for multiple languages (Type/JavaScript, Java, Python, .NET).
+
+Due to differences between browsers and partial incompatibility of remote debugging protocols, Playwright is distributed with patched versions of Firefox and Webkit \citepalias{PPatch21}.
 Stock versions of Chromium-based browsers (Google Chrome, Microsoft Edge) are supported. \citepalias{PReadme22}
+
+
+\begin{itemize}
+    \item Ease of use - Using Puppeteer for creating web automations requires knowledge of the selected programming language.
+
+    \item Universality - Following Puppeteer's legacy, Playwright also provides a low-level browser control. This makes it a universal tool for various web automation related tasks.
+    
+    Just like Puppeteer, Playwright also lacks content-oriented high-level abstractions for scraping or crawling the web. Again, those must be implemented by the user or imported from third-party libraries.
+    
+    Unlike Puppeteer, TS/JS version of Playwright comes with Playwright Test, a simple test-runner using a Jest-inspired syntax.
+
+    \item Automation resilience -
+    The Playwright library does not provide decision-making algorithms capable of handling unexpected states.
+
+    \item Open format - The automations written using Playwright are executable programs.
+\end{itemize}
+
 
 \emptyline
 
-All the aforementioned examples however require programming, which can mean a significant barrier to entry for beginners
-Beside these examples, there are also other solutions, allowing the users to create, manage and execute automated workflows using higher-level UI actions.
+All the aforementioned examples require programming, which can mean a significant barrier to entry for beginners.
+Besides these examples, there are also other solutions, allowing the users to create, manage and execute automated workflows using higher-level UI actions.
 
 \emptyline
 
@@ -36,15 +118,40 @@ Beside these examples, there are also other solutions, allowing the users to cre
 Accessible as a web application, it provides the user with a web-based browser recorder, removing both the need for programming and package installation.
 Dexi.io \ac{GUI} editor allows for creating branches based on user-specified conditions.
 
-Dexi.io also serves as an execution platform for these recordings. 
-While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
-
 The recorder app suffers from problems stemming from its web nature, namely \acs{CORS}-related issues, being targetted by anti-scraping measures and worse responsiveness.
 
-\textbf{Browse.ai} serves similar purpose. 
+\begin{itemize}
+    \item Ease of use - As mentioned above, Dexi.io provides a graphical \acs{WYSIWYG} recorder, shielding the user from coding of any kind.
+    While this recorder has several flaws - namely unintuitive \ac{GUI} and problems related to anti-scraping measures employed by the websites, it still can be well useful in different use cases.
+
+    \item Universality - The recorder offers many user-defined actions, including test assertions and smart data extraction with sibling detection, making Dexi.io a universal tool for testing and scraping. 
+    The recorder also allows for limited web-crawling functionality.
+
+    \item Automation resilience -
+    The recorder allows the users to manually specify custom branching conditions on certain places in the workflow.
+    
+    \item Open format - While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
+    Besides the recorder, Dexi.io provides a platform for scheduling and running the automations.
+\end{itemize}
+
+\textbf{Browse.ai} serves a similar purpose as Dexi.io.
 Utilizing a Chrome-only browser extension for workflow recording, Browser.ai offers arguably better \ac{UX} than Dexi.io with more accurate web page representation.
 
-The execution of Browser.ai recordings is available only through the associated web service without any export option, causing even stronger vendor lock-in than Dexi.io.
+The execution of Browser.ai recordings is available only through the associated web service without any export option, causing even stronger lock-in than Dexi.io.
+
+\begin{itemize}
+    \item Ease of use - As mentioned above, Dexi.io provides a graphical \acs{WYSIWYG} recorder, shielding the user from coding of any kind.
+    While this recorder has several flaws - namely unintuitive \ac{GUI} and problems related to anti-scraping measures employed by the websites, it still can be well useful in different use cases.
+
+    \item Universality - The recorder offers many user-defined actions, including test assertions and smart data extraction with sibling detection, making Dexi.io a universal tool for testing and scraping. 
+    The recorder also allows for limited web-crawling functionality.
+
+    \item Automation resilience -
+    The recorder allows the users to manually specify custom branching conditions on certain places in the workflow.
+    
+    \item Open format - While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
+    Besides the recorder, Dexi.io provides a platform for scheduling and running the automations.
+\end{itemize}
 
 \textbf{Chrome Recorder} is a preview feature of the Google Chrome web browser (as of \today).
 Embedded into the browser itself, the Chrome recorder provides the best performance and responsiveness of the mentioned examples. 

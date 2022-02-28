@@ -1,3 +1,13 @@
 \newcommand\short{}
 
 \newcommand{\emptyline}{\vspace{\baselineskip}}
+
+\newcommand{\multilinebox}[1]{
+    \begin{center}
+        \framebox{
+            \begin{minipage}{0.9\textwidth}
+                #1
+            \end{minipage}
+        }
+    \end{center}
+}
