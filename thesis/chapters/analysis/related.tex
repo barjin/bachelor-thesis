@@ -177,17 +177,19 @@ This can be seen as Google's reaction to the new emerging technologies and the f
 
 \addcontentsline{lot}{table}{Competition analysis}
 \begin{center}
-    \begin{tabular}{ c | c | c | c | c }
+    \begin{tabular}{ c || c | c | c | c }
     \thead{Name} & \thead{Ease of use, \\\ac{UX}} & \thead{Universality} & \thead{Recording \\resilience} & \thead{Open format} \\
     \hline\hline
-        \makecell{Cypress, \\Selenium} & \makecell{requires \\programming skills} & Yes & Not inherent & source code \\
+        \makecell{Cypress, \\Selenium} & \makecell{requires \\programming} & Yes & Not inherent & source code \\
         \hline
-        \makecell{Puppeteer, \\Playwright} & \makecell{requires \\programming skills} & Yes & Not inherent & source code \\
+        \makecell{Puppeteer, \\Playwright} & \makecell{requires \\programming} & Yes & Not inherent & source code \\
         \hline
         Dexi.io & \makecell{web-based \\\ac{GUI} recorder} & Partial & Not ensured & \makecell{JSON-based\\ closed format} \\
         \hline
         Browse.ai & \makecell{\ac*{GUI} recorder \\ (extension)} & Partial & No & \makecell{no export\\ available} \\
         \hline
-        \makecell{Chrome \\Recorder} & \makecell{\ac*{GUI} recorder \\ (browser feature)} & \makecell{Bad,\\ only testing} & No & source code \\
+        \makecell{Chrome \\Recorder} & \makecell{\ac*{GUI} recorder \\ (browser feature)} & \makecell{Incomplete,\\ only testing} & No & source code \\
+        \hline
+        \makecell{\textbf{This work}} & \makecell{\ac*{GUI} editor \\ (web app)} & \makecell{Yes} & \makecell{Stems from \\the format\\ definition} & \makecell{JSON-based\\ open format} \\
     \end{tabular}
 \end{center}
