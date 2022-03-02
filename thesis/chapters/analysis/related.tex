@@ -140,36 +140,54 @@ Utilizing a Chrome-only browser extension for workflow recording, Browser.ai off
 The execution of Browser.ai recordings is available only through the associated web service without any export option, causing even stronger lock-in than Dexi.io.
 
 \begin{itemize}
-    \item Ease of use - As mentioned above, Dexi.io provides a graphical \acs{WYSIWYG} recorder, shielding the user from coding of any kind.
-    While this recorder has several flaws - namely unintuitive \ac{GUI} and problems related to anti-scraping measures employed by the websites, it still can be well useful in different use cases.
+    \item Ease of use - Browse.ai takes pride in making web automation as intuitive as possible. 
+    This, combined with the browser extension nature of the service, makes it the one with the best \ac{UX} out of the mentioned options.
+    
+    However, as of \today, author of this work struggled with severe performance issues when using this extension, possibly hinting at optimization problems.
 
-    \item Universality - The recorder offers many user-defined actions, including test assertions and smart data extraction with sibling detection, making Dexi.io a universal tool for testing and scraping. 
-    The recorder also allows for limited web-crawling functionality.
+    \item Universality - Being oriented mostly towards data extraction, the recorder provides advanced scraping techniques.
+    Web crawling and \ac{UI} testing have limited support.
 
     \item Automation resilience -
-    The recorder allows the users to manually specify custom branching conditions on certain places in the workflow.
+    There is no way of specifying conditional branches. 
     
-    \item Open format - While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
-    Besides the recorder, Dexi.io provides a platform for scheduling and running the automations.
+    \item Open format - There is no way of exporting the recordings. 
+    The Browse.ai website provides an environment for running the recordings, causing a vendor lock-in. 
+    
+    Furthermore, the difference between the recording environment, i.e. client's browser, and the execution environment, the cloud service, causes errors. 
+    Those stem from differences between both environments and anti-bot measures employed by third-party services.
 \end{itemize}
 
 \textbf{Chrome Recorder} is a preview feature of the Google Chrome web browser (as of \today).
-Embedded into the browser itself, the Chrome recorder provides the best performance and responsiveness of the mentioned examples. 
+This can be seen as Google's reaction to the new emerging technologies and the first attempt to implement a native recording functionality into the browser.
 
-Since this browser feature is targetted mainly at the \ac{QA} testing community, the recorder offers detailed perfomance measurement features.
-For the same reason, data extraction methods are completely missing, rendering the Chrome Recorder unusable for web scraping use cases.
+\begin{itemize}
+    \item Ease of use - Embedded into the browser, the Chrome recorder provides the best performance and responsiveness of the mentioned examples.  
 
-The created recording is exportable as a JavaScript code utilizing the Puppeteer library.
+    \item Universality - Since this browser feature is targetted mainly at the \ac{QA} testing community, the recorder offers detailed performance measurement features.
+    For the same reason, data extraction methods are missing, rendering the Chrome Recorder unusable for web scraping use cases.    
+
+    \item Automation resilience -
+    There is no way of specifying conditional branches. 
+    
+    \item Open format - The created recording is exportable as a JavaScript code utilizing the Puppeteer library.
+\end{itemize}
+
+\renewcommand\cellgape{\Gape[4pt]}
 
 \addcontentsline{lot}{table}{Competition analysis}
 \begin{center}
-    \begin{tabular}{ c | c | c | c }
-    Name & Ease of use, \ac{UX} & Recording resilience & Open format \\
+    \begin{tabular}{ c | c | c | c | c }
+    \thead{Name} & \thead{Ease of use, \\\ac{UX}} & \thead{Universality} & \thead{Recording \\resilience} & \thead{Open format} \\
     \hline\hline
-        Cypress, Selenium & no & no & xxx \\
-        Puppeteer, Playwright & no & yes & xxx \\
-        Dexi.io & no & no no & xxx \\
-        Browse.ai & no & yes yes & xxx \\
-        Chrome Recorder & no & no yes & xxx \\
+        \makecell{Cypress, \\Selenium} & \makecell{requires \\programming skills} & no & no & xxx \\
+        \hline
+        \makecell{Puppeteer, \\Playwright} & \makecell{requires \\programming skills} & no & yes & xxx \\
+        \hline
+        Dexi.io & \makecell{web-based \\\ac{GUI} recorder} & no no & no& xxx \\
+        \hline
+        Browse.ai & \makecell{\ac*{GUI} recorder \\ (extension)} & yes yes & no& xxx \\
+        \hline
+        \makecell{Chrome \\Recorder} & \makecell{\ac*{GUI} recorder \\ (browser feature)} & no yes& no & xxx \\
     \end{tabular}
 \end{center}
