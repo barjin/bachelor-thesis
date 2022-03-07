@@ -77,24 +77,24 @@ Completing the \textit{Prolog-inspired} example from the previous section, the c
     % Y is to be unified with the next state
 
     nextState(X, Y) :- url(X, "https://jindrich.bar"),
-                       goto(X, Y, "https://example.org").
+                       goto(X, Y, "https://example.org"), !.
     
     nextState(X, Y) :- selector(X, "button"),
-                       click(X, Y, "button").
+                       click(X, Y, "button"), !.
     
     nextState(X, Y) :- cookies(X, "key", "value"),
-                       click(X, Y, "logout").
+                       click(X, Y, "logout"), !.
     
     nextState(X, Y) :- url(X, "https://example.org"),
                        selector(X, "input"),
-                       fill(X, "input", "hello").
+                       fill(X, "input", "hello"), !.
 
 \end{verbatim}
 \end{minipage}
 
 The mock implementation of the workflow definition file in \textit{SWI-Prolog} is available as a \href{https://swish.swi-prolog.org/p/dwaim.pl}{snippet}\footnote{Available at \url{https://swish.swi-prolog.org/p/dwaim.pl}} in the \textit{Prolog} online execution environment \textit{Swish}. 
 
-Please note that in this case, the \textit{Prolog} interpreter is actually taking role of the workflow interpreter.
+Please note that in this case, the \textit{Prolog} interpreter is actually taking the role of the workflow interpreter.
 
 \multilinebox{
     \smallskip
@@ -121,4 +121,50 @@ While the advanced features of \textit{XML} are invaluable when working with com
 With YAML taking first place, JSON is also a runner-up in human readability.
 While improving the file legibility, the indentation oriented nature of YAML makes it very prone to input errors - this problem is absent in JSON because of its bracket-oriented grammar.
 
-For the reasons mentioned, the workflow definition format will be built upon JSON - a host format providing a simple, human-readable serialization for structured schema of the definitions.
+For the reasons mentioned, the workflow definition format will be built upon JSON - a host format providing a simple, human-readable serialization for a structured schema of the definitions.
+
+The JSON serialization of the workflow definition file might then look as follows:
+
+\begin{minipage}{0.95\linewidth}
+\begin{verbatim}
+
+[
+    {
+        "conditions": {
+            "url": "https://example.org"
+        },
+        "actions": [
+            {
+                "action": "goto",
+                "args": ["https://jindrich.bar"]
+            }
+        ]
+    },
+    {
+        "conditions": {
+            "selector": "input"
+        },
+        "actions": [
+            {
+                "action": "fill",
+                "args": ["input", "hello"]
+            }
+        ]
+    }
+]
+
+\end{verbatim}
+\end{minipage}
+
+While being more verbose, the JSON serialization is arguably more readable to a layman than the \textit{Prolog}-syntax pseudo implementation.
+
+The root of the workflow definition is a \textit{JSON} array containing multiple objects, specifying the rules. 
+Those have two keys, \texttt{conditions} and \texttt{actions}, defining the required conditions for the web browser environment and actions to be carried out in case the conditions apply, respectively.
+
+The \texttt{conditions} object describes a valid state of the web browser using a set of predefined keys (\texttt{url}, \texttt{selector}, \texttt{cookies} and other).
+
+The \texttt{action} object is an array of actions to be carried out. 
+Every action is described using its name (\texttt{click}, \texttt{goto}, \texttt{fill}...) and an additional, action-specific set of arguments.
+
+The action arguments are stored in an array. 
+This also applies to singleton arguments, mainly to maintain consistency and improve the machine readability of the format.
