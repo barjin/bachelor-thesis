@@ -38,31 +38,37 @@ Following through with the \textit{Prolog} comparison, the workflow definition c
 \begin{minipage}{0.95\linewidth}
 \begin{verbatim}
     % X is denoting the current state of the browser
-    nextState(X) :- url(X, "https://jindrich.bar"),
+    % Y is to be unified with the next state
+
+    nextState(X, Y) :- url(X, "https://jindrich.bar"),
                         % action to be 
                         % executed on 
                         % https://jindrich.bar
     
-    nextState(X) :- selector(X, "button"),
+    nextState(X, Y) :- selector(X, "button"),
                         % action to be 
                         % executed if the current 
                         % page contains a button
     
-    nextState(X) :- cookies(X, "key", "value"),
+    nextState(X, Y) :- cookies(X, "key", "value"),
                         % action to be 
                         % executed if the current 
                         % browser session has the
                         % `key` cookie for the  
                         % page set to `value`
     
-    nextState(X) :- url(X, "https://example.org"),
-                    selector(X, "input"),
+    nextState(X, Y) :- url(X, "https://example.org"),
+                       selector(X, "input"),
                         % action to be 
                         % executed in case of both
                         % conditions matching 
                         % (boolean AND example)
+
 \end{verbatim}
 \end{minipage}
+
+The conditions might also provide support for advanced techniques, such as wildcards or regular expressions.
+Those would be particularly useful for the URLs e.g. for targetting a specific domain, TLD etc.
 
 \subsection{Reactions}
 
@@ -76,25 +82,36 @@ Completing the \textit{Prolog-inspired} example from the previous section, the c
 \begin{minipage}{0.95\linewidth}
 \begin{verbatim}
     % X is denoting the current state of the browser
+    % Y is to be unified with the next state
 
-    nextState(X) :- url(X, "https://jindrich.bar"),
-                    goto(X, "https://example.org").
+    nextState(X, Y) :- url(X, "https://jindrich.bar"),
+                       goto(X, Y, "https://example.org").
     
-    nextState(X) :- selector(X, "button"),
-                    click(X, "button").
+    nextState(X, Y) :- selector(X, "button"),
+                       click(X, Y, "button").
     
-    nextState(X) :- cookies(X, "key", "value"),
-                        % action to be 
-                        % executed if the current 
-                        % browser session has the
-                        % `key` cookie for the  
-                        % page set to `value`
+    nextState(X, Y) :- cookies(X, "key", "value"),
+                       click(X, Y, "logout").
     
-    nextState(X) :- url(X, "https://example.org"),
-                    selector(X, "input"),
-                    fill(X, "input", "hello").
+    nextState(X, Y) :- url(X, "https://example.org"),
+                       selector(X, "input"),
+                       fill(X, "input", "hello").
+
 \end{verbatim}
 \end{minipage}
+
+The mock implementation of the workflow definition file in \textit{SWI-Prolog} is available as a \href{https://swish.swi-prolog.org/p/dwaim.pl}{snippet}\footnote{Available at \url{https://swish.swi-prolog.org/p/dwaim.pl}} in the \textit{Prolog} online execution environment \textit{Swish}. 
+
+Please note that in this case, the \textit{Prolog} interpreter is actually taking role of the workflow interpreter.
+
+\multilinebox{
+    \smallskip
+    \textbf{Note:} This example also shows that the new state of the browser depends only on the preceding one. 
+    
+    Such quality, also called \textit{memorylessness}, or \textit{Markov property}, simplifies both the interpreter design and the programming concept itself.
+    It might also allow for some optimizations utilizing parallel execution. 
+    \smallskip
+}
 
 \subsection{Serialization}
 
