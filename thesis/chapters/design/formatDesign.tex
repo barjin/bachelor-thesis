@@ -1,0 +1,124 @@
+\section{Workflow definition format}
+
+As both the \textit{interpreter} and \textit{the editor} work directly with the files containing the workflow definitions, the first part of the project to be designed is the workflow definition format itself.
+
+The workflow definition files should contain all the information needed to describe an arbitrary web-related workflow. 
+The files in this format should also be parsable, human- and machine-readable and provide a simple yet powerful way of programming the web automations.
+
+\subsection{Programming logic}
+
+As the workflow definitions are computer programs of sorts, the first design decision needs to be what programming concepts will the file format implement.
+To retain the steep learning curve and user-friendliness, this programming ``language'' also should not be too complicated.
+
+The popularity of other automation tools shows that one of the simplest forms of programming is \textit{declarative programming}.
+Defining the desired results rather than describing the complete control flow allows users to program the automations without being exposed to complicated programming principles.
+
+Inspired by logic programming languages such as \textit{Prolog}, the workflow definition should contain a set of \textit{conditions} describing a possible state of the environment, connected to their respective \textit{reactions}, describing a sequence of actions to be carried out in case the condition applies.
+
+% The similarity with \textit{Prolog} can be seen here, with the \textit{conditions} corresponding to \textit{Prolog's} fact \textit{heads} and \textit{reactions} to their respective \textit{bodies}.
+
+\subsection{Conditions}
+
+As stated before, the workflow definition format should allow the user to specify web environment-related conditions for running the automation steps.
+
+Such conditions can be e.g. the browser visiting a certain \texttt{url}, the current page containing certain \texttt{selectors} or the current browser session having \texttt{cookies} set to specific values.
+
+Moreover, the format should allow the user to combine the base conditions using \textit{boolean operators} to create more comprehensible and compact syntax.
+
+Following through with the \textit{Prolog} comparison, the workflow definition could look something like this:
+
+\begin{minipage}{0.95\linewidth}
+\begin{verbatim}
+    % X is denoting the current state of the browser
+    % Y is to be unified with the next state
+
+    nextState(X, Y) :- url(X, "https://jindrich.bar"),
+                        % action to be 
+                        % executed on 
+                        % https://jindrich.bar
+    
+    nextState(X, Y) :- selector(X, "button"),
+                        % action to be 
+                        % executed if the current 
+                        % page contains a button
+    
+    nextState(X, Y) :- cookies(X, "key", "value"),
+                        % action to be 
+                        % executed if the current 
+                        % browser session has the
+                        % `key` cookie for the  
+                        % page set to `value`
+    
+    nextState(X, Y) :- url(X, "https://example.org"),
+                       selector(X, "input"),
+                        % action to be 
+                        % executed in case of both
+                        % conditions matching 
+                        % (boolean AND example)
+
+\end{verbatim}
+\end{minipage}
+
+The conditions might also provide support for advanced techniques, such as wildcards or regular expressions.
+Those would be particularly useful for the URLs e.g. for targetting a specific domain, TLD etc.
+
+\subsection{Reactions}
+
+The workflow definition format should also allow the user to specify the actions to be carried out when the respective condition matches.
+
+Those can be e.g. \texttt{click}, \texttt{goto}, \texttt{scrapeData} and similar. 
+The actions should be chainable, allowing the user to specify a set of actions to be executed sequentially, without additional condition matching between those.
+
+Completing the \textit{Prolog-inspired} example from the previous section, the complete workflow definition would look like this:
+
+\begin{minipage}{0.95\linewidth}
+\begin{verbatim}
+    % X is denoting the current state of the browser
+    % Y is to be unified with the next state
+
+    nextState(X, Y) :- url(X, "https://jindrich.bar"),
+                       goto(X, Y, "https://example.org").
+    
+    nextState(X, Y) :- selector(X, "button"),
+                       click(X, Y, "button").
+    
+    nextState(X, Y) :- cookies(X, "key", "value"),
+                       click(X, Y, "logout").
+    
+    nextState(X, Y) :- url(X, "https://example.org"),
+                       selector(X, "input"),
+                       fill(X, "input", "hello").
+
+\end{verbatim}
+\end{minipage}
+
+The mock implementation of the workflow definition file in \textit{SWI-Prolog} is available as a \href{https://swish.swi-prolog.org/p/dwaim.pl}{snippet}\footnote{Available at \url{https://swish.swi-prolog.org/p/dwaim.pl}} in the \textit{Prolog} online execution environment \textit{Swish}. 
+
+Please note that in this case, the \textit{Prolog} interpreter is actually taking role of the workflow interpreter.
+
+\multilinebox{
+    \smallskip
+    \textbf{Note:} This example also shows that the new state of the browser depends only on the preceding one. 
+    
+    Such quality, also called \textit{memorylessness}, or \textit{Markov property}, simplifies both the interpreter design and the programming concept itself.
+    It might also allow for some optimizations utilizing parallel execution. 
+    \smallskip
+}
+
+\subsection{Serialization}
+
+\defcitealias{GTrends22}{GTrends22}
+\defcitealias{Medium21}{Medium21}
+
+Finally, the workflow definition needs to be physically stored in a file. 
+As it would be rather counterproductive to develop a custom file format for storing the conditions and reactions, the workflow definitions might be stored using a host meta-format.
+
+Based on the hierarchical nature of both \textit{condition-action} pairs and possibly recursive nature of the \textit{conditions} themselves, it would be only logical to store the definitions using a hierarchical data format like \textit{JSON}, \textit{XML} or \textit{YAML}.
+
+Comparing these formats, \textit{JSON} comes out as the most popular \citepalias{GTrends22} and most space-saving \citepalias{Medium21}. 
+While the advanced features of \textit{XML} are invaluable when working with complex structured data, it is perhaps too complicated for storing well-defined workflow definitions.
+
+With YAML taking first place, JSON is also a runner-up in human readability.
+While improving the file legibility, the indentation oriented nature of YAML makes it very prone to input errors - this problem is absent in JSON because of its bracket-oriented grammar.
+
+For the reasons mentioned, the workflow definition format will be built upon JSON - a host format providing a simple, human-readable serialization for structured schema of the definitions.
