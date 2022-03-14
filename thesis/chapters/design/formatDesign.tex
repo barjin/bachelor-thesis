@@ -18,6 +18,7 @@ Inspired by logic programming languages such as \textit{Prolog}, the workflow de
 % The similarity with \textit{Prolog} can be seen here, with the \textit{conditions} corresponding to \textit{Prolog's} fact \textit{heads} and \textit{reactions} to their respective \textit{bodies}.
 
 \subsection{Conditions}
+\label{conditions}
 
 As stated before, the workflow definition format should allow the user to specify web environment-related conditions for running the automation steps.
 
@@ -60,7 +61,7 @@ Following through with the \textit{Prolog} comparison, the workflow definition c
 \end{minipage}
 
 The conditions might also provide support for advanced techniques, such as wildcards or regular expressions.
-Those would be particularly useful for the URLs e.g. for targetting a specific domain, TLD etc.
+Those would be particularly useful e.g. for URLs for targetting a specific domain, TLD etc.
 
 \subsection{Reactions}
 
@@ -168,3 +169,73 @@ Every action is described using its name (\texttt{click}, \texttt{goto}, \texttt
 
 The action arguments are stored in an array. 
 This also applies to singleton arguments, mainly to maintain consistency and improve the machine readability of the format.
+
+\defcitealias{Mongo20}{Mongo20}
+
+\subsubsection{Boolean operators}
+As mentioned in subsection \ref{conditions} Conditions, the format should offer a way of combining the defined conditions using basic boolean operators.
+Following other popular format based on JSON (or rather JavaScript objects), the workflow definition format might take inspiration from MongoDB query syntax \citepalias{Mongo20}.
+
+In this query language, boolean operations are expressed using an object with a specific key, containing an array of operand objects.
+
+\begin{minipage}{0.95\linewidth}
+    \begin{verbatim}
+
+{$and: [{expression},{expression},...]}
+{$or:  [{expression},{expression},...]}
+{$not: {expression}}
+
+    \end{verbatim}
+\end{minipage}
+
+This approach has a direct mapping to JSON syntax, which makes it very suitable for our use case.
+
+\begin{minipage}{0.95\linewidth}
+\begin{verbatim}
+
+...
+{
+    "conditions": {
+        "$and": [
+            { "url": "https://example.org" },
+            { "selector": "input" },
+            { "selector": ".green" }
+        ]
+    },
+    ...
+},
+...
+
+\end{verbatim}
+\end{minipage}
+
+Because of the associativity of those operations, the representation of the boolean operators AND and OR can have arbitrary arity - take an arbitrary number of parameters.
+
+\subsubsection{Regular expressions}
+
+Following the same logic as with the boolean operators, the support for regular expressions requested in the subsection \ref{conditions} Conditions can take inspiration from MongoDB query operators \citepalias{Mongo20}.
+In the MongoDB syntax, regular expressions are stored as objects with predefined keys - \texttt{"\$regex"} and \texttt{"\$options"}:
+
+\begin{minipage}{0.95\linewidth}
+    \begin{verbatim}
+    
+{ <field>: { $regex: /pattern/, $options: '<options>' } }
+{ <field>: { $regex: 'pattern', $options: '<options>' } }
+{ <field>: { $regex: /pattern/<options> } }
+    \end{verbatim}
+\end{minipage}
+
+Regarding the types used, only the second mentioned alternative is directly translatable to JSON, as JSON cannot contain literal regular expressions. 
+Storing the expressions in strings is therefore a second most fluent option.
+
+\begin{minipage}{0.95\linewidth}
+    \begin{verbatim}
+        
+...
+    { "conditions": {
+        "url": { "$regex": "http://.*"}
+    } },
+...
+    \end{verbatim}
+\end{minipage}
+    
