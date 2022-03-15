@@ -14,8 +14,8 @@ gantt
     Introduction: done, introduction, after environment, 4d
     Competing solutions: done, 4d
     Design - file syntax: done, syntax, after design_review, 3d
-    Design - decomposition: done, after syntax, 4d
-    Design - tools used: tools, after syntax, 3d
+    Design - decomposition: done, decomp, after syntax, 4d
+    Design - tools used: tools, after decomp, 3d
     Analysis: after tools, 4d
     Implementation description: after implementation_review, 5d
     Testing description: after tests_review, 3d
@@ -25,12 +25,12 @@ gantt
 
     section Reviews/Analysis
 
-    User Role Analysis: active, analysis_roles, after environment, 4d
-    Use Case Analysis: after analysis_roles, 2d
-    User Scenarios: analysis_scenarios, after analysis_roles, 2d
-    Design review: design_review, after analysis_scenarios, 3d
-    Implementation review: implementation_review, after design_review, 5d
-    Testing review: tests_review, after implementation_review, 3d 
+    User Role Analysis: done, analysis_roles, after environment, 4d
+    Use Case Analysis: done, after analysis_roles, 2d
+    User Scenarios: done, analysis_scenarios, after analysis_roles, 2d
+    Design review: done, design_review, after analysis_scenarios, 3d
+    Implementation review: done, implementation_review, after design_review, 5d
+    Testing review: done, tests_review, after implementation_review, 3d 
 ```
 
 ## Achievements
@@ -42,7 +42,14 @@ gantt
 
 - Introduction
     - ✅ [Basics, reasons for the work](./thesis/chapters/introduction.tex)
-    - Competition analysis
 
 - Analysis
-    ... ?
+    - ✅ [Competition analysis](./thesis/chapters/analysis/related.tex)
+    - ✅ [Functional requirements](./thesis/chapters/requirements.tex)
+    - 🟨 [Use Case analysis](./thesis/chapters/usecase_analysis.tex)
+        - ⏭️ User Scenarios
+
+- Design
+    - ✅ [Format design](./thesis/chapters/analysis)
+    - 🟨 [Interpreter design](./thesis/chapters/analysis)
+    - ⏭️ Editor design
