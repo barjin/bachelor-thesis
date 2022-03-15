@@ -18,7 +18,7 @@ gantt
     Design - tools used: active, tools, after decomp, 3d
     Analysis: active, analysis, after tools, 4d
     Implementation description: after analysis, 5d
-    Testing description: after tests_review, 3d
+    Testing description: after analysis, 3d
     User documentation: 5d
     Programmer documentation:7d
     Admin documentation: 3d
