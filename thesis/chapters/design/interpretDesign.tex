@@ -1,0 +1,57 @@
+\section{Interpreter}
+
+With the workflow definition format designed, we can now design the interpreter of this format.
+As mentioned in the section \ref{requirements} Functional Requirements, the interpreter should be a piece of software able to read, validate and execute the workflows defined in the aforementioned format.
+
+\subsection{Components}
+
+To facilitate later design decisions and understanding of the \ac{SW}, we divide the interpreter project into several independent parts.
+These parts are:
+
+\emptyline
+\textit{Browser}
+\smallskip
+    
+The web browser to be automated.
+    
+To simplify the usage and installation of the solution, the interpreter should be able to work with stock (i.e. unpatched) versions of browsers, allowing the users to use their standard web browsers.
+
+As seen in the section \ref{competition} Existing Solutions, most commercial web browsers already provide programmable interfaces (via CDP, RDP\dots).
+The interpreter - browser communication can be further simplified by using low-level third-party libraries, also mentioned in the section \ref{competition} Existing Solutions.
+
+\emptyline
+\textit{Workflow validator}
+\smallskip
+
+A piece of software able to statically validate a given workflow definition file.
+
+While it might provide various ways of validating the workflow definitions, the minimum is syntax validation, i.e. reading a file written in the format described above and telling whether it follows the definition of the format.
+Optionally, the syntax validator might also provide descriptive error messages to communicate the problem with the user.
+
+Given the programmable nature of the format, static ``code'' analysis might also take place here. 
+While some workflow definition files might be syntactically correct, it is possible that they might contain logical errors.
+The validator could then spot unreachable branches, suggesting reordering of the rules in the definition or suggesting updating the conditions.
+
+\emptyline
+\textit{Condition matcher}
+\smallskip
+    
+A piece of software comparing the current browser state with the conditions from the workflow definition, selecting the correct rule to be applied.
+
+The condition matcher should communicate with the browser, letting the browser know of the currently matched set of actions. 
+Running the condition matcher repeatedly with the same browser context effectively executes the workflow definition, serving as the interpreter.
+
+\subsection{Programming language, libraries}
+
+As mentioned above, the communication with the internal browser could be facilitated using a third-party library. 
+This approach - compared to communicating with the browser directly - leads to quicker development iteration and smaller code base, ultimately leading to a better tested software. 
+
+Looking at the \hyperref[competition]{competition analysis}, the low-level automation libraries could be useful for this use case.
+Both \textit{Puppeteer} and \textit{Playwright} offer a lightweight programmable interface by simply wrapping and unifying the debugging functionality of the web browsers.
+
+As mentioned before, \textit{Puppeteer's} only supported browsers are Chromium-based, while \textit{Playwright} provides support for Chromium-, Firefox- and Webkit-based browsers alike.
+For this reason, the \textit{Condition matcher} will be using Playwright as its backend library.
+
+While \textit{Playwright} has bindings for different languages (\textit{JavaScript}, \textit{Python}, \textit{.NET} and \textit{Java} as of \today), the primary development is made in TypeScript (superset of JavaScript).
+
+Because of this, the interpreter should also be developed in Type/JavaScript, both because of the library support and the closeness of the language to the web environment.

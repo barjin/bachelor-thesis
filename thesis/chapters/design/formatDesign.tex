@@ -209,7 +209,10 @@ This approach has a direct mapping to JSON syntax, which makes it very suitable 
 \end{verbatim}
 \end{minipage}
 
-Because of the associativity of those operations, the representation of the boolean operators AND and OR can have arbitrary arity - take an arbitrary number of parameters.
+Because of the associativity of those operations, the representation of the boolean operators AND and OR can have arbitrary arity.
+Writing an empty \texttt{\$and} or \texttt{\$or} clause corresponds to an empty rule. 
+Specifying only one subrule (using \texttt{\$and}/\texttt{\$or} as unary operators) defies the purpose of using those operators. 
+With this being said, the format does not specify a required operator arity. 
 
 \subsubsection{Regular expressions}
 
@@ -226,14 +229,14 @@ In the MongoDB syntax, regular expressions are stored as objects with predefined
 \end{minipage}
 
 Regarding the types used, only the second mentioned alternative is directly translatable to JSON, as JSON cannot contain literal regular expressions. 
-Storing the expressions in strings is therefore a second most fluent option.
+Therefore, storing the expressions as strings is the most fluent option.
 
 \begin{minipage}{0.95\linewidth}
     \begin{verbatim}
         
 ...
     { "conditions": {
-        "url": { "$regex": "http://.*"}
+        "url": { "$regex": "http://.*... }
     } },
 ...
     \end{verbatim}
