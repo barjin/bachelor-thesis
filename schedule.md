@@ -50,6 +50,6 @@ gantt
         - ⏭️ User Scenarios
 
 - Design
-    - ✅ [Format design](./thesis/chapters/analysis)
-    - 🟨 [Interpreter design](./thesis/chapters/analysis)
+    - ✅ [Format design](./thesis/chapters/design/formatDesign.tex)
+    - 🟨 [Interpreter design](./thesis/chapters/interpretDesign.tex)
     - ⏭️ Editor design
