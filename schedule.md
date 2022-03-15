@@ -15,9 +15,9 @@ gantt
     Competing solutions: done, 4d
     Design - file syntax: done, syntax, after design_review, 3d
     Design - decomposition: done, decomp, after syntax, 4d
-    Design - tools used: tools, after decomp, 3d
-    Analysis: after tools, 4d
-    Implementation description: after implementation_review, 5d
+    Design - tools used: active, tools, after decomp, 3d
+    Analysis: active, analysis, after tools, 4d
+    Implementation description: after analysis, 5d
     Testing description: after tests_review, 3d
     User documentation: 5d
     Programmer documentation:7d
