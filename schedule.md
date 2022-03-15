@@ -11,12 +11,12 @@ gantt
     Deadline: milestone, 12.04.2022, 0d
 
     Setup Environment (LaTex, GitHub): done, environment, 18.02.2022, 2d
-    Introduction: active, introduction, after environment, 4d
-    Competing solutions: 4d
-    Analysis: after introduction, 4d
-    Design - file syntax: syntax, after design_review, 3d
-    Design - decomposition: after syntax, 4d
-    Design - tools used: after syntax, 3d
+    Introduction: done, introduction, after environment, 4d
+    Competing solutions: done, 4d
+    Design - file syntax: done, syntax, after design_review, 3d
+    Design - decomposition: done, after syntax, 4d
+    Design - tools used: tools, after syntax, 3d
+    Analysis: after tools, 4d
     Implementation description: after implementation_review, 5d
     Testing description: after tests_review, 3d
     User documentation: 5d
