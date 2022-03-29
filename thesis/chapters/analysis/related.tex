@@ -8,29 +8,21 @@
 As of now, there are already numerous solutions for automating web actions on the market. 
 A majority of those uses existing web browsers and offer a programmable interface for simulating user input.
 
-\multilinebox{
-    \textbf{Evaluation criteria}        
-    \par
-    To provide a comprehensive comparison, the existing solutions will be evaluated based on several common criteria. Those are:
-    \begin{flushright}
-        \begin{minipage}[t]{0.95\textwidth}
-            \textbf{Ease of use}: \Ac{UX} quality, evaluated based on different user knowledge levels.
-            \smallskip
-        
-            \textbf{Universality}: How applicable is this solution for different web automation use cases, i.e. \ac{UI} testing, web scraping, web crawling...
-            \smallskip
-        
-            \textbf{Automation resilience}: Is the automation capable of dealing with unexpected situations? Does the solution allow for conditional decisions?
-            \smallskip
-        
-            \textbf{Open format}: Whether or not does the solution publish open documentation of its internal format.
-            \smallskip
-        \end{minipage}
-    \end{flushright}
-}
-\emptyline
+\subsection{Evaluation criteria}
+To provide a comprehensive comparison, the existing solutions will be evaluated based on several common criteria. Those are:
+\begin{enumerate}
+    \item \textbf{Ease of use}: \Ac{UX} quality, evaluated based on different user knowledge levels.
+    \item \textbf{Universality}: How applicable is this solution for different web automation use cases, i.e. \ac{UI} testing, web scraping, web crawling and other.
+    \item \textbf{Automation resilience}: Is the automation capable of dealing with unexpected situations? Does the solution allow for conditional decisions?
+    \item \textbf{Open format}: Whether or not does the solution publish open documentation of its internal format.
+\end{enumerate}
 
-In general, the existing automation solutions can be divided into two groups, based on the \ac{UX} quality and granularity of allowed actions. 
+An universal, open and automation tool should provide all of those qualities. 
+Designing such a tool is the ultimate goal of this work.
+
+\subsection{Programming-based solutions}
+
+In general, the existing automation solutions can be divided into two groups, based on the \ac{UX} quality and granularity of supported actions. 
 The first group consists of programmable solutions targetted at experienced users:
 
 \emptyline
@@ -86,7 +78,7 @@ This allows Puppeteer to exceed Selenium both in stability and performance, spor
 \end{itemize}
 
 \textbf{Playwright} is another low-level library multilanguage library offering programmable ways of controlling a web browser.
-For browser communication, Playwright uses similar technology as Puppeteer, unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today) and has official bindings for multiple languages (Type/JavaScript, Java, Python, .NET).
+For browser communication, Playwright uses similar technology as Puppeteer\; unlike Puppeteer, Playwright supports multiple commercial browsers (Chromium, Firefox, Webkit as of \today) and has official bindings for multiple languages (Type/JavaScript, Java, Python, .NET).
 
 Due to differences between browsers and partial incompatibility of remote debugging protocols, Playwright is distributed with patched versions of Firefox and Webkit \citepalias{PPatch21}.
 Stock versions of Chromium-based browsers (Google Chrome, Microsoft Edge) are supported. \citepalias{PReadme22}
@@ -108,7 +100,7 @@ Stock versions of Chromium-based browsers (Google Chrome, Microsoft Edge) are su
 \end{itemize}
 
 
-\emptyline
+\subsection{Codeless solutions}
 
 All the aforementioned examples require programming, which can mean a significant barrier to entry for beginners.
 Besides these examples, there are also other solutions, allowing the users to create, manage and execute automated workflows using higher-level UI actions.
@@ -131,7 +123,7 @@ The recorder app suffers from problems stemming from its web nature, namely \acs
     \item Automation resilience -
     The recorder allows the users to manually specify custom branching conditions on certain places in the workflow.
     
-    \item Open format - While the recordings are exportable in a JSON-based format, the definition of this format is closed, effectively causing a vendor lock-in.
+    \item Open format - While the recordings are exportable in a JSON\footnote{\href{https://www.json.org/json-en.html}{https://www.json.org/json-en.html}}-based format, the definition of this format is closed, effectively causing a vendor lock-in.
     Besides the recorder, Dexi.io provides a platform for scheduling and running the automations.
 \end{itemize}
 
@@ -173,7 +165,6 @@ This can be seen as Google's reaction to the new emerging technologies and the f
     
     \item Open format - The created recording is exportable as a JavaScript code utilizing the Puppeteer library.
 \end{itemize}
-
 \renewcommand\cellgape{\Gape[4pt]}
 
 \addcontentsline{lot}{table}{Competition analysis}
@@ -181,16 +172,40 @@ This can be seen as Google's reaction to the new emerging technologies and the f
     \begin{tabular}{ c || c | c | c | c }
     \thead{Name} & \thead{Ease of use, \\\ac{UX}} & \thead{Universality} & \thead{Recording \\resilience} & \thead{Open format} \\
     \hline\hline
-        \makecell{Cypress, \\Selenium} & \makecell{requires \\programming} & Yes & Not inherent & source code \\
+        \makecell{Cypress, \\Selenium} & 
+        \makecell{\XSolidBrush \; \makecell[l]{requires \\programming}} & 
+        \Checkmark & 
+        $\boldsymbol{-}$ & 
+        \makecell{$\boldsymbol{-}$ \; \makecell[l]{source code}} \\
         \hline
-        \makecell{Puppeteer, \\Playwright} & \makecell{requires \\programming} & Yes & Not inherent & source code \\
+        \makecell{Puppeteer, \\Playwright} & 
+        \makecell{\XSolidBrush \; \makecell[l]{requires \\programming}} & 
+        \Checkmark & 
+        $\boldsymbol{-}$ & 
+        \makecell{$\boldsymbol{-}$ \; \makecell[l]{source code}} \\
         \hline
-        Dexi.io & \makecell{web-based \\\ac{GUI} recorder} & Partial & Not ensured & \makecell{JSON-based\\ closed format} \\
+        Dexi.io &
+        \makecell{\Checkmark \; \makecell[l]{web-based \\\ac{GUI} recorder}} & 
+        $\boldsymbol{-}$ & 
+        $\boldsymbol{-}$ & 
+        \makecell{\XSolidBrush \; \makecell[l]{JSON-based\\ closed format}} \\
         \hline
-        Browse.ai & \makecell{\ac*{GUI} recorder \\ (extension)} & Partial & No & \makecell{no export\\ available} \\
+        Browse.ai & 
+        \makecell{\Checkmark \; \makecell[l]{\ac*{GUI} recorder \\ (extension)}} & 
+        $\boldsymbol{-}$ & 
+        \XSolidBrush & 
+        \makecell{\XSolidBrush \; \makecell[l]{No export \\available}}\\
         \hline
-        \makecell{Chrome \\Recorder} & \makecell{\ac*{GUI} recorder \\ (browser feature)} & \makecell{Incomplete,\\ only testing} & No & source code \\
+        \makecell{Chrome \\Recorder} & 
+        \makecell{\Checkmark \; \makecell[l]{\ac*{GUI} recorder \\ (browser\\ feature)}} & 
+        \XSolidBrush & 
+        \XSolidBrush & 
+        \makecell{$\boldsymbol{-}$ \; \makecell[l]{source code}} \\
         \hline
-        \makecell{\textbf{This work}} & \makecell{\ac*{GUI} editor \\ (web app)} & \makecell{Yes} & \makecell{Stems from \\the format\\ definition} & \makecell{JSON-based\\ open format} \\
+        \makecell{\textbf{This work}} & 
+        \makecell{\Checkmark \; \makecell[l]{\ac*{GUI} editor \\ (web app)}} & 
+        \Checkmark & 
+        \makecell{\Checkmark} & 
+        \makecell{\Checkmark \; \makecell[l]{JSON-based\\ open format}} \\
     \end{tabular}
 \end{center}
