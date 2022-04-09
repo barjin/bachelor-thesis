@@ -1,0 +1,13 @@
+\section{Parts of the project}
+
+As stated in the \hyperref[intro]{introduction} of this thesis, the goal of this thesis is to develop a clear, concise format for storing web automations
+as well as tools for simplifying the work with the format. 
+
+Given this assignment, it is only natural to first design the automation format, as the design of the tools for editing and debugging the automation files
+largely depends on the format design itself. 
+For the tools part, we can reuse the rather informal partition of the tools into \textit{Editor} and \textit{Runner}, following the idea from the \autoref{requirements} Requirements, 
+as this still describes the two principal use cases of the toolkit.
+The notional interface and the middle ground between those two parts (\textit{Editor} and \textit{Runner}) is then the workflow definition format, as both tools are designed to work with it, albeit in different ways.
+
+The main parts of the project from now on are therefore the \textit{Format}, \textit{Editor} and \textit{Runner}.
+The design of those three parts is discussed in the following sections separately.

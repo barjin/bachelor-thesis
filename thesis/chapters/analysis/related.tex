@@ -3,8 +3,7 @@
 \defcitealias{CyprCond}{CyprCond}
 \defcitealias{SelenCF}{SelenCF}
 
-\section{Existing solutions}
-\label{competition}
+\section{Existing solutions} \label{competition}
 As of now, there are already numerous solutions for automating web actions on the market. 
 A majority of those uses existing web browsers and offer a programmable interface for simulating user input.
 
@@ -62,7 +61,7 @@ Distributed as a multilanguage library, Selenium implements a high-level interfa
 \textbf{Puppeteer} is a low-level library used for web browser automation. 
 Unlike Cypress and Selenium, Puppeteer supports Chrome (or Chromium) as its only backend browser as of now (\today).
 
-The communication with the browser is implemented via WebSockets and the DevTools Protocol, a Chromium-specific set of commands.
+The communication with the browser is implemented via WebSockets and the \ac{CDP}, a Chromium-specific set of commands.
 This allows Puppeteer to exceed Selenium both in stability and performance, sporting up to $17\%$ speedup in benchmarks \citepalias{Chck21}.
 
 \begin{itemize}

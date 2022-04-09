@@ -1,6 +1,6 @@
 \section{Workflow definition format}
 
-As both the \textit{interpreter} and \textit{the editor} work directly with the files containing the workflow definitions, the first part of the project to be designed is the workflow definition format itself.
+As both the \textit{Runner} and the \textit{Editor} work directly with the files containing the workflow definitions, the first part of the project to be designed is the workflow definition format itself.
 
 The workflow definition files should contain all the information needed to describe an arbitrary web-related workflow. 
 The files in this format should also be parsable, human- and machine-readable and provide a simple yet powerful way of programming the web automations.
@@ -104,13 +104,13 @@ Completing the \textit{Prolog-inspired} example from the previous section, the c
 
 The mock implementation of the workflow definition file in \textit{SWI-Prolog} is available as a \href{https://swish.swi-prolog.org/p/dwaim.pl}{snippet}\footnote{Available at \url{https://swish.swi-prolog.org/p/dwaim.pl}} in the \textit{Prolog} online execution environment \textit{Swish}. 
 
-Please note that in this case, the \textit{Prolog} interpreter is actually taking the role of the workflow interpreter.
+Please note that in this case, the \textit{Prolog} interpreter is actually taking the role of the workflow runer.
 
 \multilinebox{
     \smallskip
     \textbf{Note:} This example also shows that the new state of the browser depends only on the preceding one. 
     
-    Such quality, also called \textit{memorylessness}, or \textit{Markov property}, simplifies both the interpreter design and the programming concept itself.
+    Such quality, also called \textit{memorylessness}, or \textit{Markov property}, simplifies both the runner design and the programming concept itself.
     It might also allow for some optimizations utilizing parallel execution. 
     \smallskip
 }

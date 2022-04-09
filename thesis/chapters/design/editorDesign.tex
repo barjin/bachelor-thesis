@@ -1,0 +1,38 @@
+\defcitealias{StateOfFtd20}{StateOfFtd20}
+\defcitealias{StateOfJS21}{StateOfJS21}
+\defcitealias{AnReVue22}{AnReVue22}
+\section{Editor}
+
+As mentioned before, the \textit{Editor} should be a piece of software facilitating the process of creating and editing a web automation file.
+
+While we designed the workflow definition format to be as readable and concise as possible, the strict JSON syntax makes the format hard to write manually.
+Especially less technical users - such as the model user role \hyperref[UserUserRole]{\textit{User}} - could experience difficulties when trying to edit 
+larger automation files. 
+As stated in the \hyperref[requirements]{Requirements}, the \textit{Editor} should also provide performance-oriented features,
+targetting more experienced users - such as the model \hyperref[DevUserRole]{\textit{Developer}}.
+
+\subsection{Technologies}
+In accordance with the nonfunctional requirements for the \textit{Editor}, the \textit{Editor} app should be user friendly and easy to use.
+Due to its relatively lightweight nature, it is possible to implement the \textit{Editor} as a web application. 
+
+This approach would be beneficial for several reasons - removing the need for installation, providing a cross-platform solution and speeding up the development and debugging process, to name a few.
+Implementing the \textit{Editor} as a client-side web application in JavaScript seems like a sensible option also because it might later share a part of the codebase with the \textit{Runner} application.
+
+\subsubsection{Frontend Framework}
+
+Client-side web applications are now seldom developed using plain JavaScript - most developers utilize frontend frameworks and libraries for easier manipulation with the \ac{DOM} tree and state management \citepalias{StateOfFtd20}.
+
+According to a popular 2021 JavaScript developer survey \citepalias{StateOfJS21}, the most popular \ac{JS} frontend frameworks among developers are \textit{React}, \textit{Angular} and \textit{Vue.js}.
+While the popularity of the tools changes over time with new emerging technologies coming every year, because of their large following, the aforementioned tools have a large number of third-party libraries 
+and modules. Compared to some less popular tools, these frameworks also have better documentation and are better debugged.
+
+When comparing the frameworks against each other, \textit{React} comes off as the framework with the steepest learning curve while being only slightly less popular than \textit{Vue.js}, based on the GitHub stars of the project \citepalias{AnReVue22}.
+While all the frameworks are utilizing the model of reusable components, \textit{Angular} and \textit{Vue.js} are taking the concept a little further with their internal \acs{HTML} templating systems.
+
+\textit{React} is the only framework of those three utilizing \acs{JSX}, i.e. combining the \acs{HTML} syntax with the \acs{JS} syntax. 
+While this might pose certain difficulties for developers learning this framework, it allows them to interleave the \acs{HTML} and \acs{JS} code in a way that is more readable and easier to maintain in the end.
+
+Since the \textit{Editor}, given the \hyperref[requirements]{requirements}, should not require any advanced features of \textit{Angular} and \textit{Vue}, 
+we can utilize the \textit{React} framework for the \textit{Editor}.
+
+\subsubsection{}

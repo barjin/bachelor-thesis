@@ -1,0 +1,41 @@
+\defcitealias{DockerRun}{DockerRef}
+
+\section{Administrator documentation}
+
+The following section contains the administrator documentation of the project.
+It contains installation instructions and a short troubleshooting guide for setting up a server for the \textit{Editor} and \textit{Runner} applications. 
+It also contains a list of system requirements on the server where the applications are to be deployed
+
+\subsection{Installation instructions}
+
+The \textit{Editor} and \textit{Runner} application are both packaged in the \href{https://www.docker.com/}{Docker} image \texttt{barjin/wbr}.
+This Docker image represents a complete server setup, including all the dependencies and the \textit{Editor} and \textit{Runner} applications.
+
+The web server providing the user interface is running on port \texttt{4321} of the Docker container, which is also the only port utilized by the \textit{Editor} and \textit{Runner} applications.
+
+Running the container with the \texttt{barjin/wbr} image then requires only one command:
+\begin{verbatim}
+    docker run -p 4321:4321 -d barjin/wbr
+\end{verbatim}
+where \texttt{4321} is the port number used by the \textit{Editor} and \textit{Runner} applications.
+
+The \texttt{-d} option instructs Docker to run the container in so-called `detached mode', which means that the container is not terminated when the command finishes. \citepalias{DockerRun}
+In case the user wants to stop the container, they can use the \texttt{docker stop} command with the container ID.
+
+In case the user never ran the \texttt{docker run} nor the \texttt{docker pull} command before, the \textit{Docker daemon} first downloads the \texttt{barjin/wbr} image from the Docker Hub.
+Note that this can cause a delay of several seconds and consume a certain amount of bandwidth (ca. TODO MiB).
+
+The Docker image can also be built from the attached Dockerfile by invoking the \texttt{docker build} command in the root folder of the project repository.
+
+\subsection{Build instructions}
+Besides the \textit{Docker} image, source files of both applications are also available in the project's GitHub repository. 
+The \texttt{package.json} files for the packages \texttt{wbr-interpret} and \texttt{wbr-editor} contain the build instructions for the respective applications,
+as well as the required dependencies.
+
+Both packages can be built by invoking the \texttt{npm run build} command in the root folder of the package folders.
+After the build process, the tools can be started by calling \texttt{npm start} in the respective package folders.
+
+Please note that building the packages individually is not the recommended way of running the application.
+The author of this work holds no responsibility for the results of the build process.
+
+Running the project in the \textit{Docker} container is the recommended way of running the application.
