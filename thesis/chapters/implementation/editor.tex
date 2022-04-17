@@ -1,0 +1,67 @@
+\section{Editor}
+As described in the \autoref{sec:editor} \textit{Editor}, the workflow editor is implemented as a React Application.
+The following section describes decisions made during the implementation of the \textit{Editor} application,
+certain problems and their solutions.
+
+% TODO add babel link
+% TODO add CRA link
+\subsection{React setup}
+While it is possible to set up a \textit{React} application as a plain Node.js application, it is not recommended.
+Handling the bundler configuration is cumbersome and requires a respectable amount of knowledge about the React toolchain.
+The React's signature \acs{JSX} syntax also requires configuring a transpiler (e.g. \texttt{babel}), which adds another level of complexity.
+
+For those reasons, the \textit{Editor} \textit{React} application has been initialized with \texttt{create-react-app}. 
+This is a \ac{CLI} tool for simple initialization of \textit{React} applications.
+It mainly provides the \textit{Webpack} and \textit{Babel} configuration files and bootstraps the project with a template website.
+
+\subsubsection{Configuring Webpack polyfills}
+
+For validating the uploaded worklflow files, the \textit{Editor} application imports the \textit{Preprocessor} class from the \textit{Interpret} module.
+While both the \textit{Editor} and \textit{Interpret} module are written in \acl{TS}, there are slight differences between \textit{Node.js} and browser code.
+
+% TODO Node.js vs browser modules citation
+% TODO react-app-rewired citation
+Most of those problems stem from the module resolution, as both \textit{Node.js} and browsers use slightly different approaches to module loading.
+While this is covered by Webpack and Babel in most cases, importing the \textit{Interpret} module initially caused errors.
+
+This is because since the version \texttt{5.0.0}, \textit{Webpack} no longer provides polyfills for the core \textit{Node.js} modules, such as \texttt{path} used by the \textit{Interpret} module.
+The \texttt{path} module is not used by the validation feature of the \textit{Editor}, so the polyfill could be simply disabled.
+However, doing so requires a manual update of the \textit{Webpack} configuration.
+
+Since the \textit{Editor} has been created with \texttt{create-react-app}, the \textit{Webpack} configuration \texttt{webpack.conf.js} is contained in the \verb|node_modules/react-scripts| directory.
+While it might be possible to modify the \texttt{webpack.conf.js} file directly, it is not recommended - the \verb|node_modules| directory is used to save all downloaded packages from NPM.
+Updating the \texttt{react-scripts} package would then reset all changes made to the configuration file.
+Furthermore, because of it's dynamic nature, the \verb|node_modules| directory is ommited from the \texttt{git} version control.
+
+While the official \texttt{create-react-app} guide suggests to perform \texttt{eject}, i.e. to export the configuration files for manual maintenance, this is a borderline unsafe step. 
+The \texttt{eject} script performs irreversible changes to the package structure, and forces the user to maintain the configuration and dependencies themselves from then on.
+
+To retain the simplicity of automatic dependency management while still overriding some of the default rules, the solution now uses \texttt{react-app-rewired}.
+Published as an \texttt{npm} package, \texttt{react-app-rewired} is an drop-in replacement of \texttt{create-react-app}, which lets the developer to update the configuration files, whlile still maintaining the base configuration.
+
+\subsection{Improving the \acs{UX}}
+Given the \hyperref[requirements]{nonfunctional requirements} for the \textit{Editor}, the \textit{Editor} application should adhere to the best \ac{UI}/\ac{UX} practices and provide a steep learning curve.
+This is manifested multiple times in the \textit{Editor} application itself.
+
+% TODO add react-dnd link
+% TODO add react-dnd example link
+\subsubsection{Drag \& Drop}
+Since the main control elements in the \textit{Editor} are modular blocks, allowing the user to use drag\&drop controls e.g. for reordering the blocks seems like the superior solution in terms of UX.
+
+The drag\&drop feature is used for reordering the blocks in the \textit{Editor} application.
+While it would be possible to drag the entire blocks around the application window, it is not recommended due to UX reasons.
+This is solved in the \textit{Editor} application by collapsing all the blocks when the drag\&drop action is initiated.
+This helps the user to focus on the actual meaning of the reordering action, and not on the content of the blocks.
+
+The implementation of the drag\&drop feature is based on the \texttt{react-dnd} library.
+While the authors of this library offer an official example of reordering a list of block elements, the \textit{Editor} implementation is not based on this example due to the mentioned reasons.
+
+\subsubsection{Argument type suggestions}
+The \textit{Editor} application generates a workflow interpretable by the \textit{Runner} application, which is internally using the \textit{Playwright} library.
+The function signatures of the workflow reaction steps depend on the \textit{Playwright} library, as most of the supported steps are mirrored from the \texttt{Page} class methods.
+While the user might set the types of the arguments themselves, the \textit{Editor} application aims to provide a simple way of creating the web automations.
+
+For this reason, the \textit{Editor} application provides a prefilled list of arguments with the correct types and matching input elements,
+which correspond to the \textit{Playwright} \texttt{Page} class methods and present the correct usage of the arguments to the user.
+
+\subsubsection{}

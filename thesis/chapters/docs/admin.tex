@@ -13,11 +13,12 @@ This Docker image represents a complete server setup, including all the dependen
 
 The web server providing the user interface is running on port \texttt{4321} of the Docker container, which is also the only port utilized by the \textit{Editor} and \textit{Runner} applications.
 
-Running the container with the \texttt{barjin/wbr} image then requires only one command:
+On a system with \texttt{docker} installed, running the container requires only one command:
 \begin{verbatim}
-    docker run -p 4321:4321 -d barjin/wbr
+    docker run -p HOSTPORT:4321 -d barjin/wbr
 \end{verbatim}
-where \texttt{4321} is the port number used by the \textit{Editor} and \textit{Runner} applications.
+where \texttt{HOSTPORT} is the port number used by the \textit{Editor} and \textit{Runner} applications on the host machine.
+After running this command, the user interface should be now available at \texttt{http://localhost:HOSTPORT/}.
 
 The \texttt{-d} option instructs Docker to run the container in so-called `detached mode', which means that the container is not terminated when the command finishes. \citepalias{DockerRun}
 In case the user wants to stop the container, they can use the \texttt{docker stop} command with the container ID.
@@ -32,10 +33,21 @@ Besides the \textit{Docker} image, source files of both applications are also av
 The \texttt{package.json} files for the packages \texttt{wbr-interpret} and \texttt{wbr-editor} contain the build instructions for the respective applications,
 as well as the required dependencies.
 
-Both packages can be built by invoking the \texttt{npm run build} command in the root folder of the package folders.
+\multilinebox{
+    \textbf{Note:} \texttt{npm} is required for building the \textit{Editor} and \textit{Runner} applications.
+    Before building the applications, run
+    \begin{center}
+    \texttt{npm install --production=false} 
+    \end{center}
+    command in the root folder of the project repository.
+    This installs the correct versions of build dependencies. 
+    Running the \texttt{build} command without the tool installation can result in errors and/or unexpected behavior.
+}
+
+Both packages can be then built by invoking the \texttt{npm run build} command in the root folder of the package folders.
 After the build process, the tools can be started by calling \texttt{npm start} in the respective package folders.
 
 Please note that building the packages individually is not the recommended way of running the application.
 The author of this work holds no responsibility for the results of the build process.
 
-Running the project in the \textit{Docker} container is the recommended way of running the application.
+Running the project in the \textit{Docker} container is the only recommended way of running the application.
