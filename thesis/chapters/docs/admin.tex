@@ -4,16 +4,24 @@
 
 The following section contains the administrator documentation of the project.
 It contains installation instructions and a short troubleshooting guide for setting up a server for the \textit{Editor} and \textit{Runner} applications. 
-It also contains a list of system requirements on the server where the applications are to be deployed
+It also contains a list of system requirements on the server where the applications are to be deployed.
 
-\subsection{Installation instructions}
+Aside from this, this section also contains installation instructions for the \textit{Runner} \texttt{npm} package, enabling the user to create software able of executing and validating the workflow definition files.
+
+\subsection{Editor application}
+
+% TODO: initial words
+
+\subsubsection{Installation instructions}
 
 The \textit{Editor} and \textit{Runner} application are both packaged in the \href{https://www.docker.com/}{Docker} image \texttt{barjin/wbr}.
 This Docker image represents a complete server setup, including all the dependencies and the \textit{Editor} and \textit{Runner} applications.
+To run a Docker image, the workstation must have \textit{Docker} installed. 
+Aside from meeting the \textit{Docker} system requirements, the \textit{Editor} Docker image presses no other requirements on the workstation.
 
 The web server providing the user interface is running on port \texttt{4321} of the Docker container, which is also the only port utilized by the \textit{Editor} and \textit{Runner} applications.
-
 On a system with \texttt{docker} installed, running the container requires only one command:
+
 \begin{verbatim}
     docker run -p HOSTPORT:4321 -d barjin/wbr
 \end{verbatim}
@@ -28,7 +36,7 @@ Note that this can cause a delay of several seconds and consume a certain amount
 
 The Docker image can also be built from the attached Dockerfile by invoking the \texttt{docker build} command in the root folder of the project repository.
 
-\subsection{Build instructions}
+\subsubsection{Build instructions}
 Besides the \textit{Docker} image, source files of both applications are also available in the project's GitHub repository. 
 The \texttt{package.json} files for the packages \texttt{wbr-interpret} and \texttt{wbr-editor} contain the build instructions for the respective applications,
 as well as the required dependencies.

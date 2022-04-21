@@ -5,7 +5,7 @@ certain problems and their solutions.
 
 % TODO add babel link
 % TODO add CRA link
-\subsection{React setup}
+\subsection{React}
 While it is possible to set up a \textit{React} application as a plain Node.js application, it is not recommended.
 Handling the bundler configuration is cumbersome and requires a respectable amount of knowledge about the React toolchain.
 The React's signature \acs{JSX} syntax also requires configuring a transpiler (e.g. \texttt{babel}), which adds another level of complexity.
@@ -39,9 +39,23 @@ The \texttt{eject} script performs irreversible changes to the package structure
 To retain the simplicity of automatic dependency management while still overriding some of the default rules, the solution now uses \texttt{react-app-rewired}.
 Published as an \texttt{npm} package, \texttt{react-app-rewired} is an drop-in replacement of \texttt{create-react-app}, which lets the developer to update the configuration files, whlile still maintaining the base configuration.
 
+\subsubsection{State maintenance}
+% TODO add React.memo link
+One of the biggest features of the \textit{React} framework is the state management and conditional rendering, enabling the developers to create lightweight applications rerendering only the updated \acs{UI} components, instead of redrawing the whole page on any update.
+
+The first versions of the \textit{Editor} did not take this into consideration and the edited workflow was stored in the top level component, trigerring rerender of all the workflow elements on any update. 
+This was done mainly for the simple consistency maintenance, as keeping the entire workflow in one piece and rerendering all the elements every time ensures that there are no stale elements with old versions of the workflow.
+
+While this approach did not introduce any measurable performance loss - most probably because of the small total number of rendered elements - in the final version of the \textit{Editor} application, 
+every major component has been wrapped with \texttt{React.memo} - a higher order component allowing memoization of once rendered component and thus theoretically boosting the render performance, since it does not rerender the component if its parameters have not changed.
+
+One caveat with this solution is that \texttt{React.memo} compares the incoming parameters with shallow equality by default - which is not useful with the hierarchical structures of the workflow definition file.
+For these situations, the \texttt{React.memo} allows the developers to implement own comparison function.
+
 \subsection{Improving the \acs{UX}}
 Given the \hyperref[requirements]{nonfunctional requirements} for the \textit{Editor}, the \textit{Editor} application should adhere to the best \ac{UI}/\ac{UX} practices and provide a steep learning curve.
 This is manifested multiple times in the \textit{Editor} application itself.
+
 
 % TODO add react-dnd link
 % TODO add react-dnd example link
@@ -54,7 +68,8 @@ This is solved in the \textit{Editor} application by collapsing all the blocks w
 This helps the user to focus on the actual meaning of the reordering action, and not on the content of the blocks.
 
 The implementation of the drag\&drop feature is based on the \texttt{react-dnd} library.
-While the authors of this library offer an official example of reordering a list of block elements, the \textit{Editor} implementation is not based on this example due to the mentioned reasons.
+While the authors of this library offer an official example of reordering a list of block elements, the \textit{Editor} implementation is not based on this example due to the mentioned features,
+which are not provided by the example solution.
 
 \subsubsection{Argument type suggestions}
 The \textit{Editor} application generates a workflow interpretable by the \textit{Runner} application, which is internally using the \textit{Playwright} library.
@@ -63,5 +78,6 @@ While the user might set the types of the arguments themselves, the \textit{Edit
 
 For this reason, the \textit{Editor} application provides a prefilled list of arguments with the correct types and matching input elements,
 which correspond to the \textit{Playwright} \texttt{Page} class methods and present the correct usage of the arguments to the user.
+The range of optional arguments is hand-picked for every command to provide the best variability while still maintaining high level of user-friendliness.
 
 \subsubsection{}

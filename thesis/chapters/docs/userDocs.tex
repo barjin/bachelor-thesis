@@ -1,0 +1,88 @@
+\section{User documentation}
+
+The following section contains user documentation for both the \textit{Editor} application and the \textit{Runner} module with described actions and user scenarios, following the scenarios from the \autoref{analysis} Analysis.
+
+
+
+\subsection{Runner package}
+While the \textit{Editor application} allows the user to execute automations and provides simple debugging features, this might not be enough.
+To use the features of the \textit{Runner} programatically, it is possible to install the \textit{Runner} module as an \texttt{npm} package.
+
+This is simply done by running the command
+\begin{center}
+\verb|npm i -s @wbr-project/wbr-interpret|
+\end{center}
+in one's \textit{Node} project folder. 
+This installs the module into the current project's dependency tree.
+
+The module package contains extensive \acs{TS} typings, further simplifying the development.
+The type definition in this package also contains typings for the workflow definition files, allowing the user to update the workflow files manually, utilizing the \acl{TS} \acs{IDE} suggestions.
+
+Using the module from one's code is then as simple as importing the module with
+\begin{verbatim}
+    import Interpreter from 'wbr-interpret';
+    - or -
+    const Interpreter = require('wbr-interpret');
+\end{verbatim}
+
+The \verb|Interpreter| imported from the module is a constructor for the \textit{Interpreter} class.
+This class, together with the \verb|Preprocessor| class provides all the features of the \texttt{wbr-interpret} module.
+
+\subsubsection{Interpreter}
+
+As stated above, the default export of the \texttt{wbr-interpret} package is the \textit{Interpreter} class.
+This class implements the main part of the automation execution.
+
+The intended usage of the interpreter class is
+% TODO 
+
+Example workflow files demonstrating different features of the \texttt{wbr-interpret} package are available in the \textit{GitHub} repository.
+
+\subsubsection{Preprocessor}
+
+The \texttt{Preprocessor} class contains static methods for validation, analysis and initialization of the workflow file definitions.
+This class is exported from the \texttt{wbr-interpret} package as a named export \texttt{Preprocessor}.
+
+The public methods provided by this class are:
+\smallskip
+
+\texttt{Preprocessor.validateWorkflow(workflow)} - a static method for checking the validity of the provided workflow. 
+Returns a \texttt{string} description of the workflow definition syntax violation.
+In case of a valid workflow, this method returns \texttt{undefined}.
+\smallskip
+
+\texttt{Preprocessor.getParams(workflow)} - a static method for extracting the parameter names from the provided workflow definition.
+Returns an array of workflow parameter names, based on the parameter structures in the provided workflow definition.
+These can be used for querying the user about the desired values of those parameters - the values must be provided before the workflow execution.
+\smallskip
+
+\texttt{Preprocessor.extractSelectors(workflow)} - a static method for gathering all the selector names from the workflow. 
+Returns an array of the selectors used in the workflow's conditionals.
+Is used to improve the performance of the workflow interpreter, as described in the \autoref{browsercom} Browser communication.
+\smallskip
+
+\texttt{Preprocessor.initWorkflow(workflow, parameters)} - a static method for initializing the workflow definition file. 
+Accepts an uninitialized workflow definition and -optionally- an object mapping parameter names to the desired values.
+Returns a copy of the provided workflow definition initialized with the provided parametets to be used with the \textit{Intepreter} class.
+\smallskip
+
+Example usage of all the mentioned methods is here:
+
+\begin{minipage}{0.95\linewidth}
+    \begin{lstlisting}[language=javascript, columns=spaceflexible]
+import { Preprocessor as P } from 'wbr-interpret';
+
+const workflow = { x: { $param: "valueOfX" } };
+const e = P.validate(workflow);
+// e -> '"workflow" is required'
+
+const params = P.getParams(workflow);
+// params -> ["valueOfX"]
+
+const sel = P.extractSelectors(workflow);
+// sel -> []
+
+const wfInit = P.initWorkflow(workflow, {"valueofX": "abc"});
+// wfInit -> { x: abc }
+    \end{lstlisting}
+\end{minipage}
