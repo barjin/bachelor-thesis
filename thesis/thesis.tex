@@ -130,6 +130,7 @@ Abstract.
 \include{chapters/design/design}
 \include{chapters/implementation/implementation}
 \include{chapters/docs/documentation}
+\include{chapters/testing/testing}
 \include{chapters/conclusion/conclusion}
 
 \include{epilog}
@@ -164,8 +165,49 @@ Abstract.
 	\appendix
 	\chapter{Attachments}
 
-	\section{First Attachment}
+	\section{SUS survey details}
+	\label{sec:sussurvey}
+	This Attachment contains the detailed results of the \ac{SUS} survey for the \textit{Editor} application.
+	While the \ac{SUS} is somewhat standardized set of questions for evaluating the quality of software,
+	the questions can be updated to match the evaluated software's needs. For completeness, the questions are included in here:
+	\begin{enumerate}
+		\item I think that I would like to use this application frequently.
+		\item I found the application unnecessarily complex.
+		\item I thought the application was easy to use.
+		\item I think that I would need the support of a technical person to be able to use this application.
+		\item I found the various functions in this application were well integrated.
+		\item I thought there was too much inconsistency in this application.
+		\item I would imagine that people would learn to use this application very quickly.
+		\item I found the application very cumbersome to use.
+		\item I felt very confident using the application.
+		\item I needed to learn a lot of things before I could get going with this application.
+	\end{enumerate}
+\smallskip
+	The response scale for each question is then a 5 point Likert agreement scale:
+	\begin{center}
+	\begin{tabular}{c | c | c | c | c}
+		Strongly disagree &	Disagree & \makecell{Neither agree\\ nor disagree} & Agree & Strongly agree \\
+		\hline
+1 & 2 & 3 & 4 & 5 \\
+	\end{tabular}
+	\end{center}
 
-\fi
-\openright
+	The results of the evaluees' survey are presented in the following table:
+	\begin{center}
+		\begin{tabular}{ c | c | c | c | c | c | c | c | c | c | c | c } 
+							 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & \textbf{SUS} \\
+							 \hline\hline
+\textbf{User 1} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{1} & \textbf{70} \\
+\textbf{User 2} & \textbf{2} & \textbf{2} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{52.5} \\
+\textbf{User 3} & \textbf{4} & \textbf{2} & \textbf{4} & \textbf{2} & \textbf{5} & \textbf{2} & \textbf{4} & \textbf{1} & \textbf{5} & \textbf{2} & \textbf{82.5} \\
+\textbf{User 4} & \textbf{3} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{4} & \textbf{3} & \textbf{3} & \textbf{3} & \textbf{3} & \textbf{4} & \textbf{45} \\
+\textbf{User 5} & \textbf{4} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{1} & \textbf{2} & \textbf{2} & \textbf{4} & \textbf{1} & \textbf{72.5} \\
+\textbf{User 6} & \textbf{1} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{2} & \textbf{3} & \textbf{1} & \textbf{3} & \textbf{35} \\
+\textbf{User 7} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{32.5} \\
+\textbf{User 8} & \textbf{1} & \textbf{2} & \textbf{2} & \textbf{5} & \textbf{3} & \textbf{3} & \textbf{2} & \textbf{4} & \textbf{1} & \textbf{3} & \textbf{30} \\
+\hline
+Average & \textbf{2.5} & \textbf{2.4} & \textbf{2.6} & \textbf{3.3} & \textbf{3.5} & \textbf{2.4} & \textbf{2.5} & \textbf{2.5} & \textbf{2.9} & \textbf{2.5} & \textbf{52.5} \\
+\end{tabular}
+\end{center}
+
 \end{document}

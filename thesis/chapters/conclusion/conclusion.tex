@@ -1,2 +1,19 @@
-\section{Conclusion}
+\chapter{Conclusion}
 
+The goal of this work, as stated in the \hyperref[intro]{Introduction} was to \textit{create a human-readable, declarative format for
+storing and creating web automations, with an interpreter of this format and a
+visual editor, allowing less technical users to create and maintain automations in
+this format.}
+
+By implementing the \textit{Editor} application and the \textit{Runner} module, this goal has been achieved in full scale.
+Both parts of the project are now fully functional - in accordance with the requirements from the \autoref{requirements} Requiements - and can be used to create and edit web automations
+for data extraction and process automation.
+Both parts of the project have been developed in a modular fashion, which makes the further development process easier and faster.
+
+Possible future work on the \textit{Editor} application and the \textit{Runner} module is to implement more advanced features.
+For instance, less technical users might prefer an automation recorder, implemented as a browser extension.
+Such a tool might generate a web automation file in the workflow definition format automatically, without any need for manual editing.
+This application might also reuse the components from the \textit{Editor} application to allow for additional workflow editing and inspection.
+
+For more technical users, the debugging features in the \textit{Editor} application could also be further enhanced, as the simplicity of the definition format might allow for more advanced 
+analysis features. Such an application might reuse the analysis methods from the \texttt{wbr-interpret} package.

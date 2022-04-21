@@ -1,0 +1,112 @@
+\chapter{Testing}
+
+During the development phase, all parts of the project have been tested using various testing methods.
+The following chapter describes the testing methodology and the nature of the individual tests.
+Aside from testing the software using automated test suites, user testing was carried out on the \textit{Editor} application.
+
+\section{Code quality}
+
+While the code quality does not directly influence the correctness of the results, it is an important aspect of the project, as it influences readability and maintainability of the code.
+Maintaining a consistent code style also speeds up the development process and reduces the risk of introducing bugs.
+
+The \texttt{wbr-interpret} module and the \textit{Editor} application are written in \textit{TypeScript} and \textit{TSX}, respectively.
+The codebase of the entire project follows the practices described in the \textit{Airbnb JavaScript Style Guide}\footnote{\href{https://airbnb.io/javascript/}{https://airbnb.io/javascript/}}, made and maintained by \textit{Airbnb, Inc.}
+\textit{Airbnb Inc.} also provides a \texttt{.eslintrc} file for configuring \textit{ESLint} in accordance with the practices described in the \textit{Style Guide}.
+All the code in the project is then automatically checked for conforming to the style guide using \texttt{ESLint} already during the development phase, which simplifies formatting and allows us to see potential errors right away.
+
+The project's GitHub repository also contains an automated \textit{GitHub Actions} workflow, running the \textit{ESLint} check with every push to the repository.
+This helps with catching the bad code patterns early on and prevents the need for further manual testing.
+
+\section{Automated tests}
+
+To ensure the elementary correctness of the project parts, the project has contained automated test suites since the early stage of development.
+This helps both with code maintenance and new feature implementation, as the automated test suites ensure we do not introduce any breaking changes.
+
+All of the tests mentioned in the following sections are also ran in the corresponding \textit{GitHub Actions} workflow. 
+This ensures that the code available in the main branch of the public repository is always tested against the latest changes.
+
+All the following tests were carried out using the \texttt{jest}\footnote{\href{https://jestjs.io/}{https://jestjs.io/}} testing framework, if not stated otherwise.
+
+\subsection{Unit tests}
+
+The entirety of the \texttt{wbr-interpret} package is covered with unit tests testing the individual components of the package.
+Special attention is paid to the \textit{Interpreter} and \textit{Preprocessor} classes, as those are the core of the project
+and contain the largest amount of complex code. 
+
+The success of the unit tests is directly related to the code design of the module, 
+since almost all methods in both classes were first written as pure functions, and only then they were converted to classes for
+encapsulation and to provide a more convenient interface.
+
+\smallskip
+While it is possible to unit test components in a React application, most of the components in the \textit{Editor} application are trivial.
+For this reason, there are no unit tests for the \textit{Editor} application and all the testing is carried out by \ac{E2E} tests.
+
+\subsection{E2E tests}
+
+Both the \textit{Editor} application and \texttt{wbr-interpret} package have been tested with \acl{E2E} tests as well.
+These tests are typically longer and follow a complete user path, testing the entire application from the user's perspective.
+
+The \texttt{wbr-interpret} package is \acl{E2E} tested for two different scenarios:
+\begin{itemize}
+    \item Loading, validating and executing a simple workflow.
+    \item Loading, validating, initializing and executing an advanced, parametrized workflow.
+\end{itemize}
+
+Both \ac{E2E} tests are run against a local server, which is started before the tests are run.
+This way we can observe the actions carried out by the \textit{Runner} even without obtaining any output data.
+
+The \textit{Editor} application has been tested using \textit{Playwright} library to simulate the user's interaction with the application.
+There are two tested scenarios:
+\begin{itemize}
+    \item Uploading various workflow files and seeing which one is valid. 
+    \item Creating new automation, editing it, running it, seeing the results and downloading the workflow definition file.
+\end{itemize}
+
+All the automations are also run against a local server, which allows us to control the content of the webpages 
+and observe the actions caused by the automation execution.
+
+\section{User testing}
+
+Aside from the code testing, the \textit{Editor} application has also been tested by 8 potential users of different technical backgrounds.
+This was done in two parts.
+First, the users were asked to use the \textit{Editor} application to create a simple automation file.
+After getting accustomed to the software, the users were given a \ac{SUS} survey and were asked to rate the application's usability.
+
+\subsection{Test scenario}
+
+The task for the users testing the \textit{Editor} application was to create a simple web automation using the application and execute it to validate the functionality.
+Such a task requires utilizing a number of \acs{UI} elements of the \textit{Editor} application, while not being too demanding or requiring much technical knowledge.
+
+\smallskip
+The created automation should be able to perform the following steps:
+\begin{enumerate}
+    \item Navigate to \href{https://jindrich.bar/}{https://jindrich.bar/}.
+    \item Click an arbitrary link on the page.
+    \item If the resulting page contains paragraphs with text, download these first, otherwise just terminate the execution.
+\end{enumerate}
+    
+The users were provided no additional support during the task.
+Out of the eight users, only three of them were able to successfully complete the task, while the others failed at various points.
+The successful users were all computer specialists with a strong technical background.
+While this might show a trend towards excessive technicality of the application, the sample size is not significant enough to make any conclusions.
+
+The individual user complaints bring better insight into the why some users failed to complete the task.
+The less successful users complained mostly about the complexity of the workflow definition format and
+the confusing logic of the workflow interpretation.
+
+There were no direct complaints about the application's user interface layout. 
+After concluding the experiment, all of the users were instinctively able to find all the control elements when asked to perform a specific action.
+All of them were also able to answer questions about the system state.
+
+\subsection{SUS survey}
+All the testers have also shared their opinions on the usability of the application via the \ac{SUS} survey.
+The detailed results of the \ac{SUS} survey are included in the \hyperref[sec:sussurvey]{Attachment A.1} SUS Survey Results.
+The attachment also contains additional information about the survey itself.
+
+The average \ac{SUS} score over the ratings of the eight users is \textbf{52.5}.
+This sets the \textit{Editor} application somewhere between the \textit{10th} and \textit{20th} percentile of typical \ac{SUS} evaluated systems.
+While this might come off as negative result, it is still a valuable indicator of the quality of the \textit{Editor} application.
+
+The main reasons for the low ratings the users stated were \textit{the workflow definition format being confusing} and the general unfamiliarity with debugging tools. 
+While it would be easy to brush these points off as too subjective, the goal of the thesis was to create a tool that would be easy to use and intuitive for the user -
+which makes all the user complaints very relevant.
