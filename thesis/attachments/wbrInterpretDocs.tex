@@ -4,70 +4,8 @@ used in the \texttt{wbr-interpret} module.
 
 The following content is structured by individual files.
 
-\subsection{\texttt{interpret.ts}}
-
-The \textit{Interpreter} class defined in the \texttt{interpret.ts} file implements the main logic for the workflow execution.
-
-\subsubsection{Methods}
-
-In the following subsection, both public and private methods of the \texttt{Interpreter} class are described.
-The relations between those are also explained here, making it easier to understand the code.
-
-\emptyline
-\verb|public async run(page: Page, params?: ParamType): Promise<void>|
-
-\smallskip
-
-This method is the main entry point for the workflow execution.
-Using the \textit{Preprocessor}'s methods, it initializes the workflow with new parameters and starts executing the workflow using the \texttt{Interpreter.runLoop()} private method.
-
-This method also registers the \texttt{Interpreter.stopper} callback function for stopping the workflow execution.
-
-\emptyline
-\verb|public async stop(): Promise<void>|
-
-\smallskip
-
-This method runs the necessary checks and stops the workflow execution.
-In case the checks fail - for example, the interpreter was not running any workflow - this method throws an exception. 
-
-\emptyline
-\verb|async runLoop(p: Page, workflow: Workflow): Promise<void>|
-
-\smallskip
-
-This private method represents the main loop of the workflow execution.
-Accepting the \textit{Playwright} Page object and an initialized \texttt{Workflow} object as arguments,
-it keeps repeatedly looking for the applicable condition among the workflow's conditions and executes the corresponding actions.
-
-It also keeps track of already executed actions and the execution history in general.
-
-\emptyline
-\verb|async getState(page:Page, workflow:Workflow):Promise<PageState>|
-
-\smallskip
-
-This private method extracts the state representation from the current browser page context.
-
-Receiving both the Page instance and the currently active workflow, the \texttt{getState} method extracts the smallest representation of the browser's state required 
-for the current workflow execution. For example, when extracting the information on elements present in the page, the method first compiles all the selectors from the workflow,
-which are then used to query the page for the elements present.
-
-\emptyline
-\begin{verbatim}   applicable(where: Where, context: PageState, 
-                       usedActions : string[] = []): boolean \end{verbatim}
-
-This private method compares the extracted page state with the conditions of the workflow.
-
-Given a condition from the workflow being executed and the current page state, the \texttt{applicable()} method returns true if the condition is applicable to the current page state.
-Optionally it also accepts a list of names of actions that were already executed in the current workflow execution.
-
-\emptyline
-\verb|async carryOutSteps(page: Page, steps: What[]) : Promise<void>|
-
-\smallskip
-
-Given a \textit{Page} class instance and a list of actions from the current matched pair, this method carries out the actions on the given Page object.
-
-The implementation of this method also contains the definitions of the custom actions and overrides for some specific \textit{Playwright} methods.
-
+\input{attachments/docs/wbr-interpret/interpret}
+\clearpage
+\input{attachments/docs/wbr-interpret/preprocessor}
+\clearpage
+\input{attachments/docs/wbr-interpret/utils}

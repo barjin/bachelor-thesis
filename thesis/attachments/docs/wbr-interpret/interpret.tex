@@ -1,0 +1,137 @@
+\subsection{\texttt{interpret.ts}}
+
+The \textit{Interpreter} class defined in the \texttt{interpret.ts} file implements the main logic for the workflow execution.
+
+\subsubsection{Type Aliases and Interfaces}
+
+In the following subsection, we define the type aliases and interfaces used in the \texttt{interpret.ts} file.
+
+\emptyline
+\verb|interface InterpreterOptions|
+
+\smallskip
+
+This interface describes the object of the optional parameters passed to the \texttt{Interpreter} class constructor.
+All of the following fields are optional, as is the whole object.
+\begin{itemize}
+   \item \texttt{maxRepeats: number} 
+   \begin{itemize}
+      \item The maximum number of times a condition-action pair can be repeated without interruption before the execution of the workflow is stopped.
+      This option defaults to \texttt{5}. Setting this to \texttt{0} disables this loop protection mechanism.
+   \end{itemize}
+   \item \texttt{maxConcurrency: number}
+   \begin{itemize}
+      \item The maximum number of concurrent browser tabs that can be handled by the \textit{Interpreter}.
+      This option defaults to \texttt{5}. Setting this option to \texttt{null} disables the concurrency limit. 
+      This can lead to overloading the browser and thus to a browser crash.
+   \end{itemize}
+   \item \texttt{serializableCallback: (output: any) => (void | Promise<void>)}
+   \begin{itemize}
+      \item The function called when a serializable output is received from the browser.
+      An object is \textit{Serializable} iff \texttt{JSON.stringify} can be called on it without throwing an exception.
+      Defaults to \texttt{console.log}.
+   \end{itemize}
+   \item \texttt{binaryCallback: (output: any, mimeType: string) => (void | Promise<void>)}
+   \begin{itemize}
+      \item The function called when a non-serializable output is received from the browser.
+      The data is accompanied by its \textit{MIME} type passed in \texttt{mimeType} parameter.
+      Default behavior logs a warning message in the console.
+   \end{itemize}
+   \item \texttt{debug: boolean}
+   \begin{itemize}
+      \item If set to \texttt{true}, the \textit{Interpreter} will log additional debug messages to the console.
+   \end{itemize}
+   \item \texttt{debugChannel: Record<string, unknown>}
+   \begin{itemize}
+      \item An object containing the following fields (all optional):
+      \begin{itemize}
+         \item \texttt{debugMessage: Function}
+         \begin{itemize}
+            \item If set, this function is called with all the log messages emitted by the \textit{Interpreter}.
+            Can be used to run a remote console for monitoring the automation run.
+         \end{itemize}
+         \item \texttt{activeId: Function}
+         \begin{itemize}
+            \item If set, this function is called with every new matched pair's index within the workflow definition.
+         \end{itemize}
+      \end{itemize}
+   \end{itemize}
+\end{itemize}
+
+
+
+\subsubsection{Methods}
+
+In the following subsection, both public and private methods of the \texttt{Interpreter} class are described.
+The relations between those are also explained here, making it easier to understand the code.
+
+\emptyline
+\begin{verbatim}
+   constructor(workflow:WorkflowFile, 
+               options?:Partial<InterpreterOptions>)
+\end{verbatim}
+
+The constructor for the Interpreter class.
+Accepts a \texttt{WorkflowFile} and a (subset of) \texttt{InterpreterOptions} object,
+throws if the \texttt{WorkflowFile} is not a valid workflow definition.
+
+\smallskip
+
+\emptyline
+\verb|public async run(page: Page, params?: ParamType): Promise<void>|
+
+\smallskip
+
+This method is the main entry point for the workflow execution.
+Using the \textit{Preprocessor}'s methods, it initializes the workflow with new parameters and starts executing the workflow using the \texttt{Interpreter.runLoop()} private method.
+
+This method also registers the \texttt{Interpreter.stopper} callback function for stopping the workflow execution.
+
+\emptyline
+\verb|public async stop(): Promise<void>|
+
+\smallskip
+
+This method runs the necessary checks and stops the workflow execution.
+In case the checks fail - for example, the interpreter was not running any workflow - this method throws an exception. 
+
+\emptyline
+\verb|async runLoop(p: Page, workflow: Workflow): Promise<void>|
+
+\smallskip
+
+This private method represents the main loop of the workflow execution.
+Accepting the \textit{Playwright} Page object and an initialized \texttt{Workflow} object as arguments,
+it keeps repeatedly looking for the applicable condition among the workflow's conditions and executes the corresponding actions.
+
+It also keeps track of already executed actions and the execution history in general.
+
+\emptyline
+\verb|async getState(page:Page, workflow:Workflow):Promise<PageState>|
+
+\smallskip
+
+This private method extracts the state representation from the current browser page context.
+
+Receiving both the Page instance and the currently active workflow, the \texttt{getState} method extracts the smallest representation of the browser's state required 
+for the current workflow execution. For example, when extracting the information on elements present in the page, the method first compiles all the selectors from the workflow,
+which are then used to query the page for the elements present.
+
+\emptyline
+\begin{verbatim}   applicable(where: Where, context: PageState, 
+                       usedActions : string[] = []): boolean \end{verbatim}
+
+This private method compares the extracted page state with the conditions of the workflow.
+
+Given a condition from the workflow being executed and the current page state, the \texttt{applicable()} method returns true if the condition is applicable to the current page state.
+Optionally it also accepts a list of names of actions that were already executed in the current workflow execution.
+
+\emptyline
+\verb|async carryOutSteps(page: Page, steps: What[]) : Promise<void>|
+
+\smallskip
+
+Given a \textit{Page} class instance and a list of actions from the current matched pair, this method carries out the actions on the given Page object.
+
+The implementation of this method also contains the definitions of the custom actions and overrides for some specific \textit{Playwright} methods.
+

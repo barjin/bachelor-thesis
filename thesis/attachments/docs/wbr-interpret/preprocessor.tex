@@ -1,0 +1,44 @@
+\subsection{\texttt{proprocessor.ts}}
+
+The \textit{Preprocessor} class defined in the \texttt{preprocessor.ts} file implements the validation and static analysis of the input workflow definitions.
+
+\subsubsection{Methods}
+
+In the following subsection, all the methods of the \texttt{Preprocessor} class are described.
+The relations between those are also explained here, making it easier to understand the code.
+All of the following methods defined on the class are static, i.e. they can be called without creating an instance of the class.
+
+\emptyline
+\verb|validateWorkflow(workflow: WorkflowFile): any|
+
+\smallskip
+
+This method validates the given workflow definition based on the syntax definition from the \autoref{formatDesign} Format Design. 
+If the object passed is a valid workflow definition, it returns null.
+In case of a syntax error in the workflow definition, it returns an error message describing the problem.
+
+\emptyline
+\verb|getParams(workflow: WorkflowFile) : string[]|
+
+\smallskip
+
+For a parametrized workflow, this method returns the list of the parameter names used in the workflow.
+Internally, it performs a recursive search for the specific parameter structure.
+
+\emptyline
+\verb|extractSelectors(workflow: Workflow) : SelectorArray|
+
+\smallskip
+
+Given a workflow definition, this method extracts the list of the string selectors used in the entire workflow.
+This is used for the state matching in the \texttt{Interpreter.runLoop()} method.
+
+\emptyline
+\verb|initWorkflow(workflow: Workflow, params?: ParamType) : Workflow|
+
+\smallskip
+
+Initializes the workflow with the given parameters. 
+Performs checks on the provided arguments and throws an exception if the parameters are not valid
+- the workflow parameters and the provided object do not match, for example.
+Also transforms the \verb|{$regex: "regex"}| objects into regular \acs{JS} regular expressions.

@@ -1,0 +1,113 @@
+\subsection{\texttt{utils/logger.ts}}
+
+The \texttt{logger.ts} file exports the \texttt{logger} function, used for logging messages across the \texttt{wbr-interpret} package.
+
+\subsubsection{Type Aliases and Enums}
+
+\verb|   Level|
+
+\smallskip
+
+The \texttt{Level} enum defines the different log levels.
+The number values assigned to the different levels are used for assigning different colours to the messages
+and correspond to the ANSI Escape Codes.
+
+\subsubsection{Methods}
+
+\verb$   logger(message: string | Error, level: Level)$
+
+The exported logger function for logging messages.
+Prepends every message with a timestamp and sets the message colour based on the value of the \texttt{level} parameter.
+
+\subsection{\texttt{utils/utils.ts}}
+
+A file containing various utility functions used in the \texttt{wbr-interpret} package.
+
+\subsubsection{Methods}
+
+\verb|   arrayToObject(array : any[]) : any|
+
+Converts an array of scalars to an object with items of the array as keys.
+All the values are empty arrays.
+
+\subsection{\texttt{utils/concurrency.ts}}
+
+Defines a generic \texttt{Concurrency} class for managing the concurrency of multiple long-running jobs running in parallel.
+
+\subsubsection{Methods}
+
+\verb|   constructor(maxConcurrency: number)|
+\smallskip
+
+A constructor for the \texttt{Concurrency} class.
+Accepts a \texttt{maxConcurrency} parameter, which defines the maximum number of jobs that can be running in parallel.
+
+\emptyline
+\verb|addJob(job: () => Promise<any>) : void |
+\smallskip
+
+Passes a job (a time-demanding async function) to the concurrency manager. 
+The time of the job's execution depends on the concurrency manager.
+
+The passed function is guaranteed to be called sometime in the future.
+
+\emptyline
+\verb|waitForCompletion() : Promise<void>|
+\smallskip
+
+Waits until there is no running or a waiting job.
+If the concurrency manager is idle at the time of calling this function,
+it waits until at least one job is completed.
+
+Returns a \texttt{Promise}, which gets resolved after there is no running or an awaiting job.
+
+\emptyline
+\verb|private runNextJob() : void|
+\smallskip
+
+A private method taking a waiting job from the queue and processing it. 
+Once the job is completed, it calls the \texttt{runNextJob()} method until there are no more jobs in the queue.
+
+\subsection{\texttt{types/}}
+
+The \texttt{types/} directory contains various \acs{TS} typings used in the \texttt{wbr-interpret} package.
+
+\subsection{\texttt{browserSide/scraper.js}}
+
+File containing browser-side code for the \texttt{wbr-interpret} specific actions (\texttt{scrape}, \texttt{scrapeSchema} and other.
+
+\subsubsection{Methods}
+
+\verb|   getBiggestElement(selector)|
+\smallskip
+
+Finds the largest element (based on its area) in the DOM tree that matches the given selector.
+Currently unused.
+
+\emptyline
+\verb|getSelectorStructural(element)|
+\smallskip
+
+Returns the structural \acs{CSS} selector of the given element. 
+The structural selector describes a path to the element from the root element, based on the tag names.
+The returned selector is not unique, as this method is used to find repeating sibling elements on the page in the \texttt{scrapableHeuristics} method.
+
+\emptyline
+\verb|scrapableHeuristics(...)|
+\smallskip
+
+An method implementing an heuristic for determining the most probably interesting elements on the page.
+The ``value'' of the element is determined by amount of similar looking elements on the same page.
+
+\emptyline
+\verb|scrape(selector)|
+\smallskip
+
+Returns the text content of the elements targetted by \texttt{scrapableHeuristics}.
+
+\emptyline
+\verb|scrapeSchema(selector)|
+\smallskip
+
+Given a set of element lists, this method matches the elements from the individual lists with each other based on their common ancestors.
+This is particularly useful for scraping incomplete tables of elements, where certain columns are not fully populated.
