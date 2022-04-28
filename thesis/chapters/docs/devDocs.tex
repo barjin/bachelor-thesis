@@ -61,74 +61,30 @@ and other preprocessing analysis tasks.
 
 More detailed descriptions of the code in the \texttt{wbr-interpret} module can be found in the Attachment \ref{atta:interpretCode}.
 
-% While the \textit{Editor application} allows the user to execute automations and provides simple debugging features, this might not be enough.
-% To use the features of the \textit{Runner} programatically, it is possible to install the \textit{Runner} module as an \texttt{npm} package.
+\subsection{wbr-editor}
 
-% Using the module from one's code is then as simple as importing the module with
-% \begin{verbatim}
-%     import Interpreter from 'wbr-interpret';
-%     - or -
-%     const Interpreter = require('wbr-interpret');
-% \end{verbatim}
+The React application \texttt{wbr-editor} is a web application that allows the user to create and edit web automation workflows.
+The following section describes the main design principles of the \texttt{wbr-editor} application.
 
-% The \verb|Interpreter| imported from the module is a constructor for the \textit{Interpreter} class.
-% This class, together with the \verb|Preprocessor| class provides all the features of the \texttt{wbr-interpret} module.
+To run the development server, the user requires to run the following sequence of commands, while in the \textit{wbr-editor} project folder:
+\begin{verbatim}
+$ npm i -s
+$ npm start
+\end{verbatim}
 
-% \subsubsection{Interpreter}
+This runs the \textit{react-scripts} development server on a free port (typically \texttt{3000}).
+The user documentation for the web application is available in the \autoref{userDocs} User documentation.
 
-% As stated above, the default export of the \texttt{wbr-interpret} package is the \textit{Interpreter} class.
-% This class implements the main part of the automation execution.
+Please note that the \texttt{react-scripts} development server does not contain the backend logic for the automation execution
+and is meant to be run only during development of the web application.
 
-% The intended usage of the interpreter class is
-% % TODO 
+\subsubsection{Package structure}
 
-% Example workflow files demonstrating different features of the \texttt{wbr-interpret} package are available in the \textit{GitHub} repository.
+The \texttt{wbr-editor} package is structured as a regular \textit{React} application. 
+All the source code files are located in the \texttt{src/} directory.
+The static files (i.e. images) are located in the \texttt{public/} directory.
 
-% \subsubsection{Preprocessor}
+Closer description of the file contents can be found in the Attachment \ref{atta:editorCode}.
 
-% The \texttt{Preprocessor} class contains static methods for validation, analysis and initialization of the workflow file definitions.
-% This class is exported from the \texttt{wbr-interpret} package as a named export \texttt{Preprocessor}.
+\subsection{wbr-cloud}
 
-% The public methods provided by this class are:
-% \smallskip
-
-% \texttt{Preprocessor.validateWorkflow(workflow)} - a static method for checking the validity of the provided workflow. 
-% Returns a \texttt{string} description of the workflow definition syntax violation.
-% In case of a valid workflow, this method returns \texttt{undefined}.
-% \smallskip
-
-% \texttt{Preprocessor.getParams(workflow)} - a static method for extracting the parameter names from the provided workflow definition.
-% Returns an array of workflow parameter names, based on the parameter structures in the provided workflow definition.
-% These can be used for querying the user about the desired values of those parameters - the values must be provided before the workflow execution.
-% \smallskip
-
-% \texttt{Preprocessor.extractSelectors(workflow)} - a static method for gathering all the selector names from the workflow. 
-% Returns an array of the selectors used in the workflow's conditionals.
-% Is used to improve the performance of the workflow interpreter, as described in the \autoref{browsercom} Browser communication.
-% \smallskip
-
-% \texttt{Preprocessor.initWorkflow(workflow, parameters)} - a static method for initializing the workflow definition file. 
-% Accepts an uninitialized workflow definition and -optionally- an object mapping parameter names to the desired values.
-% Returns a copy of the provided workflow definition initialized with the provided parametets to be used with the \textit{Intepreter} class.
-% \smallskip
-
-% Example usage of all the mentioned methods is here:
-
-% \begin{minipage}{0.95\linewidth}
-%     \begin{lstlisting}[language=javascript, columns=spaceflexible]
-% import { Preprocessor as P } from 'wbr-interpret';
-
-% const workflow = { x: { $param: "valueOfX" } };
-% const e = P.validate(workflow);
-% // e -> '"workflow" is required'
-
-% const params = P.getParams(workflow);
-% // params -> ["valueOfX"]
-
-% const sel = P.extractSelectors(workflow);
-% // sel -> []
-
-% const wfInit = P.initWorkflow(workflow, {"valueofX": "abc"});
-% // wfInit -> { x: abc }
-%     \end{lstlisting}
-% \end{minipage}

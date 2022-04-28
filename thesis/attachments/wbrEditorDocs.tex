@@ -1,0 +1,190 @@
+\section{\texttt{wbr-editor} code documentation} \label{atta:editorCode}
+
+This attachment contains in-depth documentation of the \texttt{wbr-editor} module, with detailed descriptions of the classes and methods
+used in the \texttt{wbr-editor} module.
+
+The project is described in a directory-by-directory manner, as the directory structure clearly outlines the project's structure and 
+groups components based on their locality inside of the application.
+
+\subsection{\texttt{src/App.tsx}}
+
+The root file of the \texttt{wbr-editor} application.
+This file defines the application entry point and combines the main application components.
+It also imports the \acs{CSS} files used in the application.
+
+\subsection{\texttt{src/Application/}}
+
+The root directory of the \texttt{wbr-editor} application.
+
+\emptyline
+\verb|Modal.tsx|
+\smallskip
+
+The file \texttt{Modal.tsx} describes the invitation modal element that is displayed when the user first accesses the application.
+The file upload and workflow validation logic is implemented here.
+
+\subsection{\texttt{src/Application/Reusables}}
+
+Folder containing small, generally reusable components.
+While the name might be a bit misleading, as all the \textit{React} components are by design reusable, 
+this folder contains the most general types of components usable throughout the whole project.
+
+\emptyline
+\verb|Button.tsx|
+\smallskip
+
+The \texttt{Button} component is a simple \textit{React} button with a label, icon and a click handler.
+It is used throughout the project to create button elements.
+
+\emptyline
+\verb|Controls.tsx|
+\smallskip
+
+The \texttt{Controls.tsx} file contains control elements with less independence than the button mentioned above.
+
+The file contains the \texttt{<Select>} component, representing the collapsible dropdown menu.
+It also contains the \texttt{<DeleteButton>} component, rendering as a small red button used for expressing the intent to delete.
+
+\clearpage
+\subsection{\texttt{src/Application/WorkflowEditor}}
+
+The \texttt{WorkflowEditor} contains the elements that allow the user to create and edit the workflow definition files.
+
+\emptyline
+\verb|WorkflowManager.tsx|
+\smallskip
+
+The \texttt{WorkflowManager.tsx} file contains the highest-level logic for the workflow definition files editing.
+The \texttt{<WorkflowManager>} element is the main component of the workflow editor part of the application.
+As the only \textit{React} component in the application, \texttt{<WorkflowEditor>} holds the current state of the edited automation.
+
+Using the generic \texttt{HistoryManager} class, it also maintains the history of the workflow definition files for the undo/redo operations.
+
+\emptyline
+\verb|WorkflowEditor.tsx|
+\smallskip
+
+The \texttt{<WorkflowEditor>} component defined in the \texttt{WorkflowEditor.tsx} file handles the workflow definition files editing
+on a lower level than the above described \texttt{WorkfowManager} component.
+
+This component also introduces the \textit{React Contexts} for sharing the global state of the current actions made in the workflow editor 
+(e.g. collapsing the pairs for better visibility).
+
+\subsection{\texttt{src/Application/WorkflowEditor/Components}}
+
+The \texttt{Components} directory contains the main building blocks of the workflow editor.
+
+\emptyline
+\verb|Where.tsx|
+\smallskip
+
+The \texttt{Where.tsx} file contains the \texttt{<Where>} component, which is used to render the recursive condition structures inside the workflow definitions.
+
+\emptyline
+\verb|What.tsx|
+\smallskip
+
+The \texttt{What.tsx} file contains the \texttt{<What>} component, which renders the list of actions inside the workflow definitions.
+The action list editor implements drag\&drop behavior using the \texttt{react-dnd} library.
+
+\emptyline
+\verb|Pair.tsx|
+\smallskip
+
+The \texttt{<Pair>} component defined in the \texttt{Pair.tsx} file combines the \texttt{<Where>} and \texttt{<What>} components to create an condition-action pair.
+This component is draggable (implemented using the \texttt{react-dnd} library) and can be collapsed and expanded using the outer contexts.
+
+\emptyline
+\verb|DropZone.tsx|
+\smallskip
+
+The \texttt{DropZone.tsx} file defines the \texttt{<DropZone>} component, representing the spots where the \texttt{<Pair>} components can be dropped.
+This component changes appearance when being dragged over.
+
+\subsection{\texttt{src/Application/WorkflowEditor/Editables}}
+
+The files in this directory contain the definitions of editable input components used mostly by the \texttt{<What>} and \texttt{<Where>} components.
+
+\emptyline
+\verb|EditableValue.tsx|
+\smallskip
+
+The \texttt{<EditableValue>} component defined in this file wrap a simple \texttt{<input>} \acs{HTML} element in a \textit{React} component,
+while enhancing it's functionality.
+It analyzes the \texttt{value} property of the \texttt{<EditableValue>} component and casts it to the most appropriate type.
+
+\emptyline
+\verb|EditableHeading.tsx|
+\smallskip
+
+A component for displaying a heading with an editable value. The editing mode is enabled by double-clicking on the heading.
+
+\emptyline
+\verb|EditableArray.tsx|
+\smallskip
+
+The \texttt{<EditableArray>} component defined in this file renders an array of values as a list of \texttt{<EditableValue>} components.
+If the \texttt{dynamic} option is set, the length of the array can be changed by the user.
+
+\emptyline
+\verb|EditableObject.tsx|
+\smallskip
+
+The \texttt{<EditableObject>} component defined in the \texttt{EditableObject.tsx} file renders an flat \acs{JS} object as a table of \texttt{<EditableValue>} components.
+If the \texttt{dynamic} option is set, the keys can be added by the user.
+
+\emptyline
+\verb|RenderValue.tsx|
+\smallskip
+
+The \texttt{<RenderValue>} component combines the functionality of the previously mentioned \texttt{<EditableValue>}, \texttt{<EditableArray>} and \texttt{<EditableObject>} components.
+Given a value, this component renders it as an appropriate \textit{React} component, based on its type.
+
+\subsection{\texttt{src/Application/WorkflowEditor/Utils}}
+
+This directory contains various helper functions and global context exports.
+
+
+\emptyline
+\verb|GlobalStates.tsx|
+\smallskip
+
+This file defines the \textit{React} contexts used in the application to share the global state of the workflow editor.
+
+\emptyline
+\verb|UpdaterFactory.tsx|
+\smallskip
+
+This file implements several factory methods for creating updaters - functions used for updating the immutable \textit{React} state.
+These are used mainly in the \texttt{<Where>} and \texttt{<What>} components to ensure uniform interface and consistency.
+
+\emptyline
+\verb|utils.ts|
+\smallskip
+
+A file containing helper \acs{TS} methods.
+
+\subsection{\texttt{src/Application/WorkflowPlayer}}
+
+This directory contains the components and classes responsible for the frontend for the remote workflow player.
+
+\emptyline
+\verb|Screen.tsx|
+\smallskip
+
+This file contains the \texttt{<Screen>} component, which is the main component of the workflow player, representing the virtual ``screen'' for the remote browser view.
+Furthermore, it contains the \texttt{ScreenControls} class, which provides methods for updating the screen component.
+
+\emptyline
+\verb|Console.tsx|
+\smallskip
+
+Contains the \texttt{<Console>} component, representing the console for logging the data from the remote browser view.
+The file also contains the \texttt{ConsoleControls} class, providing methods for updating the console component.
+
+\emptyline
+\verb|Player.tsx|
+\smallskip
+
+Implements the \texttt{Player} component combining the \texttt{Screen} and \texttt{Console} components.
+Also exports the \texttt{runWorkflow()} function, which implements the remote browser communication, handling the data from the remote browser and updating the components.
