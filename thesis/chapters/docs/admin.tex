@@ -23,7 +23,7 @@ The web server providing the user interface is running on port \texttt{4321} of 
 On a system with \texttt{docker} installed, running the container requires only one command:
 
 \begin{verbatim}
-    docker run -p HOSTPORT:4321 -d barjin/wbr
+    docker run -p HOSTPORT:8080 -d barjin/wbr
 \end{verbatim}
 where \texttt{HOSTPORT} is the port number used by the \textit{Editor} and \textit{Runner} applications on the host machine.
 After running this command, the user interface should be now available at \texttt{http://localhost:HOSTPORT/}.
@@ -35,6 +35,9 @@ In case the user never ran the \texttt{docker run} nor the \texttt{docker pull} 
 Note that this can cause a delay of several seconds and consume a certain amount of bandwidth (ca. TODO MiB).
 
 The Docker image can also be built from the attached Dockerfile by invoking the \texttt{docker build} command in the root folder of the project repository.
+
+Please note that the \textit{Editor} application allows the users to run arbitrary code on the server.
+This is a security risk, and the user is advised to only share their instance of \textit{Editor} server with trusted users.
 
 \subsubsection{Build instructions}
 Besides the \textit{Docker} image, source files of both applications are also available in the project's GitHub repository. 
