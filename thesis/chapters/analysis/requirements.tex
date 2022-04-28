@@ -8,10 +8,13 @@ For clarity, let us divide the toolkit project into individual tools serving dif
 As the main purposes of the toolkit are \textit{creating}, \textit{editing} and \textit{running web automations},
 we can talk about the \textit{Editor} and the \textit{Runner} parts separately.
 
+\emptyline
 \subsection{Editor}
 
 The \textit{Editor} is the part of the toolkit allowing the users to create and edit the web automations.
 It should provide a user-friendly way of doing so while not restricting the more advanced users.
+
+The ultimate goal of the \textit{Editor} is not to exhaustively support all the features of the workflow definition syntax but to provide a simple and intuitive way of creating and editing web automations.
 
 \smallskip
 
@@ -26,16 +29,18 @@ It should provide a user-friendly way of doing so while not restricting the more
     No user-induced change to the file shall corrupt the valid file syntax.
     \item The \textit{Editor} must allow the user to export a valid workflow file. 
     This exported file must be readable by the \textit{Runner}.
+    \item The \textit{Editor} must provide debugging tools for the user to check the functionality of the currently edited workflow file.
 \end{enumerate}
 
 \subsubsection{Nonfunctional requirements}
 
 \begin{enumerate}[label=\thesubsection.2.\arabic*]
     \item The user interface of the \textit{Editor} shall be user-friendly and adhere to the best \ac{UI} practices.
-    \item The \textit{Editor} shall contain hints for inexperienced users. 
-    The \textit{Editor} shall allow more experienced users to disable those hints.
+    \item The \textit{Editor} shall contain workflow files for common use cases for the user to use as a boilerplate project for their own workflows
+    \item The \textit{Editor} shall contain example workflow files for the user to study and to showcase the capabilities of the toolkit.
 \end{enumerate}
 
+\clearpage
 \subsection{Runner}
 
 The \textit{Runner} is the part of the toolkit providing support for executing the automations made with the \textit{Editor}.
@@ -52,7 +57,6 @@ It should provide a safe and optimized way for running the automations as well a
     \item The \textit{Runner} must enable the user to interrupt the automation execution at an arbitrary moment.
     \item The \textit{Runner} must provide options for debugging the automations. 
     These must expose additional information, allowing the more experienced users to facilitate the automation development.
-    \item The \textit{Runner} must enable the user to start automation with an arbitrary context (webpage, webpage state).
     \item The \textit{Runner} must inform the user of any runtime errors. 
     Furthermore, the \textit{Runner} must also log all errors appropriately.
     \item The \textit{Runner} must expose a programmable interface to allow for a simple third-party adoption.

@@ -1,0 +1,29 @@
+\section{\texttt{wbr-cloud} API documentation} \label{atta:cloudAPI}
+
+This attachment documents the \texttt{wbr-cloud} server REST API.
+
+\emptyline
+\verb|POST /api/performer|
+\smallskip
+
+The REST \acs{API} endpoint for passing the automation to the \textit{Editor} application backend server for execution.
+
+The body of the request must contain a JSON object with the fields \texttt{workflow} containing the workflow definition object and \texttt{parameters}, containing the optional parameters for the current workflow.
+
+Returns a JSON object with the fields \texttt{url} containing the unique identifier of the workflow run, boolean \texttt{status} signalizing whether the workflow started successfully and \texttt{message} containing the status message.
+
+\emptyline
+\verb|POST /api/performer/:id|
+\smallskip
+
+The REST \acs{API} endpoint for management of the automation running in the \textit{Editor} application backend server.
+
+The body of the request must contain a JSON object with the field \texttt{action} describing the desired action to be executed. Currently, the only valid action is \texttt{stop},
+stopping the specified workflow run.
+
+\emptyline
+\textbf{Other endpoints}
+\smallskip
+
+Because of legacy reasons, the \texttt{wbr-cloud} server also provides other endpoints, following the REST API practices.
+These endpoints are however, not used by the \texttt{wbr-editor} frontend application and their functionality is not ensured to be stable, as they are no longer maintained.

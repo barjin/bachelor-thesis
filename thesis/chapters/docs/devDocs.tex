@@ -67,16 +67,30 @@ The React application \texttt{wbr-editor} is a web application that allows the u
 The following section describes the main design principles of the \texttt{wbr-editor} application.
 
 To run the development server, the user requires to run the following sequence of commands, while in the \textit{wbr-editor} project folder:
-\begin{verbatim}
-$ npm i -s
-$ npm start
-\end{verbatim}
+\begin{center}
+    \begin{minipage}[h!]{0.5\textwidth}
+        \begin{verbatim}
+            npm i -s
+            npm start
+        \end{verbatim}        
+    \end{minipage}
+\end{center}
 
 This runs the \textit{react-scripts} development server on a free port (typically \texttt{3000}).
 The user documentation for the web application is available in the \autoref{userDocs} User documentation.
 
 Please note that the \texttt{react-scripts} development server does not contain the backend logic for the automation execution
-and is meant to be run only during development of the web application.
+and is meant to be run only during the development of the web application.
+
+If the user wants to run the web application in production mode, it needs to be built first. This is done simply by using the following command:
+\begin{center}
+    \begin{minipage}[h!]{0.5\textwidth}
+        \begin{verbatim}
+            npm i -s
+            npm run build
+        \end{verbatim}        
+    \end{minipage}
+\end{center}
 
 \subsubsection{Package structure}
 
@@ -88,3 +102,9 @@ Closer description of the file contents can be found in the Attachment \ref{atta
 
 \subsection{wbr-cloud}
 
+The \texttt{wbr-cloud} package is factually a part of the \texttt{wbr-editor} application, serving as its backend.
+Due to design decisions made prior to the implementation of the \texttt{wbr-editor} package, these packages are not directly related and are developed as two individual packages.
+
+Technically speaking, the \texttt{wbr-cloud} package is an HTTP server used for serving the \textit{Editor} application and providing a REST \ac{API} for instantiating and managing the web automation runs.
+
+Detailed information about the specific REST API endpoints can be found in the Attachment \ref{atta:cloudAPI}.
