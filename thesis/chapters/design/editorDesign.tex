@@ -24,7 +24,7 @@ Client-side web applications are now seldom developed using plain JavaScript - m
 
 According to a popular 2021 JavaScript developer survey \citepalias{StateOfJS21}, the most popular \ac{JS} frontend frameworks among developers are \textit{React}, \textit{Angular} and \textit{Vue.js}.
 While the popularity of the tools changes over time with new emerging technologies coming every year, because of their large following, the aforementioned tools have a large number of third-party libraries 
-and modules. Compared to some less popular tools, these frameworks also have better documentation and are better debugged.
+and modules.
 
 When comparing the frameworks against each other, \textit{React} comes off as the framework with the steepest learning curve while being only slightly less popular than \textit{Vue.js}, based on the GitHub stars of the project \citepalias{AnReVue22}.
 While all the frameworks are utilizing the model of reusable components, \textit{Angular} and \textit{Vue.js} are taking the concept a little further with their internal \acs{HTML} templating systems.
@@ -40,12 +40,9 @@ we can utilize the \textit{React} framework for the \textit{Editor}.
 This subsection describes the specific \acs{UI} design and presents mockups for the \textit{Editor} application.
 The designs presented here should adhere to the nonfunctional requirements of user-friendliness and ease of use.
 
-These mock-ups are meant to be used as a guide for the \textit{Editor} application implementation.
-
 Please note that the following images do not represent the finished software, only the UI mock-ups.
 The mock-up designs are also available in \textit{Figma}\footnote{\href{https://www.figma.com/file/gzisxDDNZX8vbvMdOjfMjT/wbr-editor}{https://www.figma.com/file/gzisxDDNZX8vbvMdOjfMjT/wbr-editor}} for further inspection and future reference.
 
-\clearpage
 \begin{figure}[!h]
     \begin{center}
         \fbox{\includegraphics[width=0.8\textwidth]{./img/UIDesigns/Frame 6.png}}
@@ -54,6 +51,7 @@ The mock-up designs are also available in \textit{Figma}\footnote{\href{https://
 \end{figure}
 
 As described in the use case analysis, the initial screen of the application should allow the user to create a new blank automation file, or to load an existing automation file.
+
 Choosing to load an existing automation file opens a file selection dialog, allowing the user to select an file from their local file system.
 
 \begin{figure}[!h]
@@ -64,7 +62,6 @@ Choosing to load an existing automation file opens a file selection dialog, allo
 \end{figure}
 While creating a new blank file immediately opens the \textit{Editor} application, an uploaded file needs to be validated first - in accordance with the \hyperref[requirements]{functional requirement} 1.2.1.1.2.
 If the provided file is not a valid workflow definition file, the user should be notified (\autoref{fig:editor-load}) and the application should remain open, allowing the user to provide different file or to create a new blank file.
-\clearpage
 
 \begin{figure}[h!]
     \begin{center}
