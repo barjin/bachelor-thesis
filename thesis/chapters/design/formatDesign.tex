@@ -104,7 +104,7 @@ Completing the \textit{Prolog-inspired} example from the previous section, the c
 
 The mock implementation of the workflow definition file in \textit{SWI-Prolog} is available as a \href{https://swish.swi-prolog.org/p/dwaim.pl}{snippet}\footnote{Available at \url{https://swish.swi-prolog.org/p/dwaim.pl}} in the \textit{Prolog} online execution environment \textit{Swish}. 
 
-Please note that in this case, the \textit{Prolog} interpreter is actually taking the role of the workflow runer.
+Please note that in this case, the \textit{Prolog} interpreter is actually taking the role of the workflow runner.
 
 \multilinebox{
     \smallskip
@@ -186,7 +186,7 @@ This also applies to singleton arguments, mainly to maintain consistency and imp
 
 \subsubsection{Boolean operators}
 As mentioned in subsection \ref{conditions} Conditions, the format should offer a way of combining the defined conditions using basic boolean operators.
-Following other popular format based on JSON (or rather JavaScript objects), the workflow definition format might take inspiration from MongoDB query syntax \citepalias{Mongo20}.
+Following another popular format based on JSON (or rather JavaScript objects), the workflow definition format might take inspiration from MongoDB query syntax \citepalias{Mongo20}.
 
 In this query language, boolean operations are expressed using an object with a specific key, containing an array of operand objects.
 
@@ -259,9 +259,12 @@ Therefore, storing the expressions as strings is the most fluent option.
 
 \subsection{Validation}
 
-The GitHub repository of the project contains JSON Schema\footnote{\href{https://github.com/barjin/wbr/blob/main/json-schema.json}{https://github.com/barjin/wbr/blob/main/json-schema.json}} for validating the workflow definition.
+The GitHub repository of the project contains JSON Schema\footnote{\href{https://github.com/barjin/wbr/blob/main/json-schema.json}{https://github.com/barjin/wbr/blob/main/json-schema.json}} for validating the workflow definition,
+as it is implemented by the \textit{Runner} and \textit{Editor} modules. 
+This slightly differs from the format definition described in the previous sections, though only by naming - the \texttt{condition} part is called \texttt{where}, the action part is called \texttt{what}.
+The workflow definition can be also optionally prepended by \texttt{meta} object, containing the workflow's name and description.
 The format documentation\footnote{\href{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}} published there also describes 
 the format of the workflow definition file in a similar manner as the chapter before. 
 
 The rest of the documentation published in the GitHub repository describes basics of workflow creation and execution using the workflow definition format.
-Please note that the remaining part of the documentation is not part of this thesis and should serve as a user guide only.
+Please note that the remaining part of the GitHub-hosted documentation is not part of this thesis and should serve as a user guide only.

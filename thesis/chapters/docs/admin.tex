@@ -15,15 +15,15 @@ Aside from this, this section also contains installation instructions for the \t
 \subsubsection{Installation instructions}
 
 The \textit{Editor} and \textit{Runner} application are both packaged in the \href{https://www.docker.com/}{Docker} image \texttt{barjin/wbr}.
-This Docker image represents a complete server setup, including all the dependencies and the \textit{Editor} and \textit{Runner} applications.
+This Docker image\footnote{Tag \texttt{barjin/wbr:final}, \texttt{sha256:b9e237a3ccf619f4a9b36e6584191bf}} represents a complete server setup, including all the dependencies and the \textit{Editor} and \textit{Runner} applications.
 To run a Docker image, the workstation must have \textit{Docker} installed. 
 Aside from meeting the \textit{Docker} system requirements, the \textit{Editor} Docker image presses no other requirements on the workstation.
 
-The web server providing the user interface is running on port \texttt{4321} of the Docker container, which is also the only port utilized by the \textit{Editor} and \textit{Runner} applications.
+The web server providing the user interface is running on port \texttt{8080} of the Docker container, which is also the only port utilized by the \textit{Editor} and \textit{Runner} applications.
 On a system with \texttt{docker} installed, running the container requires only one command:
 
 \begin{verbatim}
-    docker run -p HOSTPORT:8080 -d barjin/wbr
+            docker run -p HOSTPORT:8080 -d barjin/wbr
 \end{verbatim}
 where \texttt{HOSTPORT} is the port number used by the \textit{Editor} and \textit{Runner} applications on the host machine.
 After running this command, the user interface should be now available at \texttt{http://localhost:HOSTPORT/}.
@@ -32,7 +32,7 @@ The \texttt{-d} option instructs Docker to run the container in so-called `detac
 In case the user wants to stop the container, they can use the \texttt{docker stop} command with the container ID.
 
 In case the user never ran the \texttt{docker run} nor the \texttt{docker pull} command before, the \textit{Docker daemon} first downloads the \texttt{barjin/wbr} image from the Docker Hub.
-Note that this can cause a delay of several seconds and consume a certain amount of bandwidth (ca. TODO MiB).
+Note that this can cause a delay of several seconds and consume a certain amount of bandwidth (ca. 200 MiB).
 
 The Docker image can also be built from the attached Dockerfile by invoking the \texttt{docker build} command in the root folder of the project repository.
 
@@ -40,25 +40,26 @@ Please note that the \textit{Editor} application allows the users to run arbitra
 This is a security risk, and the user is advised to only share their instance of \textit{Editor} server with trusted users.
 
 \subsubsection{Build instructions}
-Besides the \textit{Docker} image, source files of both applications are also available in the project's GitHub repository. 
-The \texttt{package.json} files for the packages \texttt{wbr-interpret} and \texttt{wbr-editor} contain the build instructions for the respective applications,
+Besides the \textit{Docker} image, all the software source files are also available in the project's GitHub repository.\footnote{Tag \texttt{v1.0}, commit hash \texttt{bf45528225e3b9fc05963d75}}
+
+The \texttt{package.json} files for the packages \texttt{wbr-interpret}, \texttt{wbr-editor} and \texttt{wbr-cloud} contain the build instructions for the respective applications,
 as well as the required dependencies.
 
 \multilinebox{
     \textbf{Note:} \texttt{npm} is required for building the \textit{Editor} and \textit{Runner} applications.
     Before building the applications, run
     \begin{center}
-    \texttt{npm install --production=false} 
+    \texttt{npm run confBuildDeps}
     \end{center}
     command in the root folder of the project repository.
-    This installs the correct versions of build dependencies. 
-    Running the \texttt{build} command without the tool installation can result in errors and/or unexpected behavior.
+    This installs the correct versions of build dependencies in the correct order. 
+    Running the \texttt{build} command without the dependency installation - or installing the build dependecies in a different way - can result in build errors and/or unexpected behavior.
 }
 
-Both packages can be then built by invoking the \texttt{npm run build} command in the root folder of the package folders.
-After the build process, the tools can be started by calling \texttt{npm start} in the respective package folders.
+The build process is managed by the \textit{Turborepo}\footnote{\url{https://turborepo.org/}} build system. 
+\textit{Turborepo} allows for faster build times and less wordy build configurations by utilizing a \texttt{make}-like approach 
+to the build process. It caches the built files and allows for incremental builds and faster rebuilds. 
+It also constructs a dependency graph of the source packages by reading their \texttt{package.json} files, which is used to determine the order in which the packages are built.
 
-Please note that building the packages individually is not the recommended way of running the application.
-The author of this work holds no responsibility for the results of the build process.
-
-Running the project in the \textit{Docker} container is the only recommended way of running the application.
+The \texttt{turbo} build is invoked by the \texttt{npm run build} command in the root folder of the repository.
+Invoking the \texttt{npm start} command in the root folder of the repository after the build starts the \textit{Editor} application server.

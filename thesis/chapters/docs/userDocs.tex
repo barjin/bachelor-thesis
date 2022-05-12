@@ -18,6 +18,10 @@ After accessing the \textit{Editor} application, the user is greeted by a welcom
 From here, they can choose whether to create new blank automation or to load existing automation from their device.
 In case the uploaded file is not a valid workflow definition, the user is informed about the reason and asked to try again.
 
+The user can also choose to open one of the example automations provided in the menu.
+While the automations themselves are part of the application, their reliability cannot be guaranteed.
+The functionality of those automations relies on the state of the targetted third-party webpages.
+
 \begin{figure}[!h]
     \begin{center}
         \fbox{\includegraphics[width=0.75\textwidth]{./img/tutorial/initial.png}}
@@ -52,7 +56,7 @@ Clicking the \texttt{`+'} button repeatedly adds new blank pairs to the end of t
 \end{figure}
 
 Unwanted pairs can be removed by clicking the red round \texttt{`x'} button in the top right corner of the pair editor.
-In such case, the workflow is updated and the pairs under the removed one are are shifted up.
+In such case, the workflow is updated and the pairs underneath the removed one are shifted up.
 \clearpage
 \subsubsection{Editing the conditions}
 
@@ -62,9 +66,9 @@ The automation interpreter is able to find the matching condition for the curren
 The pair's \textit{Condition} is displayed under the section ``If'' in the workflow editor.
 The condition is defined as a possibly nested tree of simple condition expressions and logical operators.
 
-By default, the condition consists of one empty \texttt{\$and} operator. 
-This operator is used to combine the nested conditions - all of the nested conditions must be true for the pair to be true.
-Removing this default operator will result in creating an empty clause - a condition that is always true.
+By default, the condition consists of the (invisible) top-level \texttt{\$and} operator.
+This operator is used to combine the first-level conditions - all of the provided conditions must be true for the pair to be true.
+Not specifying any conditions will result in creating an empty clause - a condition that is always true.
 This is useful e.g. for defining a default set of actions.
 
 The conditions can be specified by clicking the blue square \texttt{`+'} button in the bottom of the operator section.
@@ -119,7 +123,7 @@ the \texttt{'goto'} action requires a \texttt{'url'} parameter etc.
 
 The \textit{Editor} application suggests the required parameters for the individual actions to enhance the user experience and avoid errors.
 
-While the \texttt{wbr-interpret} module provides support for all the \textit{Playwright's} \textit{Page} methods, the \textit{Editor} application supports only a subset of the most common actions.
+While the \texttt{wbr-interpret} module provides support for all the \textit{Playwright's} \textit{Page} methods, the \textit{Editor} application provides only a subset of the most common actions.
 
 \subsubsection{Testing the automation}
 

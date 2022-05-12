@@ -16,7 +16,7 @@ we can talk about the \textit{Editor} and the \textit{Runner} parts separately.
 The \textit{Editor} is the part of the toolkit allowing the users to create and edit the web automations.
 It should provide a user-friendly way of doing so while not restricting the more advanced users.
 
-The ultimate goal of the \textit{Editor} is not to exhaustively support all the features of the workflow definition syntax but to provide a simple and intuitive way of creating and editing web automations.
+The goal of the \textit{Editor} is not to exhaustively support all the features of the workflow definition syntax, but to provide a simple and intuitive way of creating and editing web automations.
 
 \smallskip
 
@@ -24,13 +24,13 @@ The ultimate goal of the \textit{Editor} is not to exhaustively support all the 
 
 \begin{enumerate}[label=\thesubsection.1.\arabic*]
     \item The \textit{Editor} must allow the user to create a valid workflow file.
-    \item The \textit{Editor} must enable the user to upload a valid workflow file into the \textit{Editor}, 
+    \item The \textit{Editor} must enable the user to upload a valid workflow file into the \textit{Editor}.
     \item If the uploaded file is not a valid workflow file, the \textit{Editor} must reject it.
     \item The \textit{Editor} must allow the user to edit the workflow file. 
     No user-induced change to the file shall corrupt the valid file syntax.
     \item The \textit{Editor} must allow the user to export a valid workflow file. 
     This exported file must be readable by the \textit{Runner}.
-    \item The \textit{Editor} must provide a way to invoke a test run of the workflow.
+    \item The \textit{Editor} must interface the \textit{Runner}, allowing the user to test run the automations.
     \item During the test run, the \textit{Editor} must display the automation results in a human-readable way.
 \end{enumerate}
 
@@ -52,7 +52,7 @@ It should provide a safe and optimized way for running the automations as well a
 \begin{enumerate}[label=\thesubsection.1.\arabic*]
     \item The \textit{Runner} must allow the user to execute given valid automations. 
     \item If the provided automation is not valid, the \textit{Runner} must refuse such automation, notifying the user.
-    \item If the provided automation provided to the \textit{Runner} is not valid, 
+    \item If the automation provided to the \textit{Runner} is not valid, 
     the \textit{Runner} must provide the user with detailed information about the errors.
     \item The \textit{Runner} must allow the user to observe the automation run.
     \item The \textit{Runner} must provide the user with additional information about the automation run. 

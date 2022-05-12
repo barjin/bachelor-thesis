@@ -36,7 +36,6 @@ Knowing all the conditions, the full browser state can be then described by the 
 \subsection{Extra features}
 
 On top of the features described in the \autoref{runnerDesign} Runner, there are some additional features implemented into the \textit{Runner} package.
-Those are mostly results of 
 While those features are tested and are available in the \verb|main| branch of the project, the other parts of the project - mainly the \textit{Editor} - typically does not provide full support.
 
 \subsubsection{Workflow parametrization}
@@ -52,7 +51,7 @@ Any nonintegral part of the worklfow can be replaced with a special structure, f
 \end{lstlisting}
 
 Before the workflow execution, the \textit{Runner} receives a dictionary of the parameters' values, replacing every \texttt{\{\$param\}} field with the declared value.
-When initialized with value \texttt{"address" : "https://abc.xyz"}, the example above turns into
+When initialized with value \texttt{\{"address" : "https://abc.xyz"\}}, the example above turns into
 
 \begin{lstlisting}[language=json]
     {
@@ -66,3 +65,75 @@ In case the user does not provide values for all the parameters or provides valu
 
 This feature can be utilized to create more universal workflow definitions, letting the end user to set certain parts of the workflow to match their use case.
 The parametrized fields can be e.g. login credentials, URL of the page to run the automation on or a custom message or data to paste to the website.
+
+\subsubsection{Automatic data extraction}
+
+While the \textit{Runner} supports all the methods from the Playwright's \texttt{Page} class,
+it also implements methods for automating data extraction from the browser.
+
+The \texttt{scrape} method allows the user to extract data from the current page by utilizing an algorithm 
+looking for the ``important'' data in the page. The user can restrict the search to a specific element subtree
+by passing the selector of the root element as the only argument to this method.
+
+The ``importance'' of the data in the page is determined using multiple heuristics, mostly by looking for 
+similar-sized elements with similar content - these are believed to be the ``scrapable'' data - e.g. online store product cards, rows of a table, etc.
+
+\subsubsection{Guided data extraction}
+
+The \texttt{scrapeSchema} method acts as a guided counterpart of the \texttt{scrape} method.
+By specifying the names of columns and their respective selectors in the only argument of this method, 
+the \textit{Runner} extracts data from these selectors, and stores them in a dictionary, where the keys are the column names.
+
+In case the selectors target multiple elements on the same page, the \textit{Runner} will group the extracted data and output multiple dictionaries.
+If the numbers of the targetted elements do not match across the columns, the \textit{Runner} tries to group the data by the \acs{DOM} hierarchy in the web page, possibly leaving some output fields empty.
+
+Here follows an example of the \texttt{scrapeSchema} method usage and the logic behind it.
+
+\begin{figure}[!h]
+    \begin{center}
+        \fbox{\includegraphics[width=0.4\textwidth]{./img/algos/scrapeSchema.pdf}}
+    \end{center}
+    \caption{Example page to be scraped}\label{scrapeSchema}
+\end{figure}
+
+The \autoref{scrapeSchema} shows an example page containing a table of user profiles. 
+A user card can contain a \textit{photo of the user} (A), their \textit{name} (B), their \textit{profile description} (C) and their \textit{phone number} (D).
+The letters represent the selectors for the \textit{Runner} to extract the data from.
+
+The user provides the \texttt{scrapeSchema} method with the following schema:
+    \begin{lstlisting}[language=json]
+                {
+                    "photo": "A",
+                    "name":  "B",
+                    "desc":  "C",
+                    "phone": "D"
+                }
+    \end{lstlisting}
+
+The \textit{Runner} extracts the data from the page. The data is stored in an array of dictionaries, where each dictionary corresponds to a user card.
+
+\begin{lstlisting}[language=json]
+[
+    {
+        "photo": "https://abc.xyz/img/user123.jpg",
+        "name":  "John Doe",
+        "desc":  "Lorem ipsum dolor sit...",
+        "phone": "123-456-7890"
+    },
+    {
+        "photo": undefined,
+        "name":  "Mark Smith",
+        "desc":  "Ipsum dolor amet sit...",
+        "phone": undefined
+    },
+    {
+        "photo": "https://abc.xyz/img/user234.jpg",
+        "name":  "Jane Green",
+        "desc":  "Sit dolor ipsum lorem...",
+        "phone": undefined
+    },
+]
+\end{lstlisting}
+
+Note how the contents of the corresponding elements are paired, leaving the missing fields empty.
+This is done by traversing the \acs{DOM} tree of the page, and grouping the elements by their common parents.

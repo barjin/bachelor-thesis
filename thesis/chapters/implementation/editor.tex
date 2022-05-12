@@ -8,9 +8,9 @@ certain problems and their solutions.
 \subsection{React}
 While it is possible to set up a \textit{React} application as a plain Node.js application, it is not recommended.
 Handling the bundler configuration is cumbersome and requires a respectable amount of knowledge about the React toolchain.
-The React's signature \acs{JSX} syntax also requires configuring a transpiler (e.g. \texttt{babel}), which adds another level of complexity.
+The React's signature \acs{JSX} syntax also requires configuring a transpiler (e.g. \texttt{babel}\footnote{\url{https://babeljs.io/}}), which adds another level of complexity.
 
-For those reasons, the \textit{Editor} \textit{React} application has been initialized with \texttt{create-react-app}. 
+For those reasons, the \textit{Editor} \textit{React} application has been initialized with \texttt{create-react-app}\footnote{\url{https://create-react-app.dev/}}. 
 This is a \ac{CLI} tool for simple initialization of \textit{React} applications.
 It mainly provides the \textit{Webpack} and \textit{Babel} configuration files and bootstraps the project with a template website.
 
@@ -25,19 +25,19 @@ Most of those problems stem from the module resolution, as both \textit{Node.js}
 While this is covered by Webpack and Babel in most cases, importing the \textit{Interpret} module initially caused errors.
 
 This is because since the version \texttt{5.0.0}, \textit{Webpack} no longer provides polyfills for the core \textit{Node.js} modules, such as \texttt{path} used by the \textit{Interpret} module.
-The \texttt{path} module is not used by the validation feature of the \textit{Editor}, so the polyfill could be simply disabled.
+The \texttt{path} module is not used by the validation feature of the \textit{Preprocessor}, so the polyfill could be simply disabled.
 However, doing so requires a manual update of the \textit{Webpack} configuration.
 
 Since the \textit{Editor} has been created with \texttt{create-react-app}, the \textit{Webpack} configuration \texttt{webpack.conf.js} is contained in the \verb|node_modules/react-scripts| directory.
-While it might be possible to modify the \texttt{webpack.conf.js} file directly, it is not recommended - the \verb|node_modules| directory is used to save all downloaded packages from NPM.
+While it might be possible to modify the \texttt{webpack.conf.js} file directly, it is not recommended - the \verb|node_modules| directory is used to save the packages downloaded from the NPM registry.
 Updating the \texttt{react-scripts} package would then reset all changes made to the configuration file.
-Furthermore, because of it's dynamic nature, the \verb|node_modules| directory is ommited from the \texttt{git} version control.
+Furthermore, because of it's dynamic nature, the \verb|node_modules| directory is omitted from the \texttt{git} version control.
 
 While the official \texttt{create-react-app} guide suggests to perform \texttt{eject}, i.e. to export the configuration files for manual maintenance, this is a borderline unsafe step. 
 The \texttt{eject} script performs irreversible changes to the package structure, and forces the user to maintain the configuration and dependencies themselves from then on.
 
-To retain the simplicity of automatic dependency management while still overriding some of the default rules, the solution now uses \texttt{react-app-rewired}.
-Published as an \texttt{npm} package, \texttt{react-app-rewired} is an drop-in replacement of \texttt{create-react-app}, which lets the developer to update the configuration files, whlile still maintaining the base configuration.
+To retain the simplicity of automatic dependency management while still overriding some of the default rules, the project now uses \texttt{react-app-rewired}\footnote{\url{https://www.npmjs.com/package/react-app-rewired}}.
+Published as an \texttt{npm} package, \texttt{react-app-rewired} is an drop-in replacement of \texttt{create-react-app}, which lets the developer to sideload custom configuration files, while still maintaining the base configuration.
 
 % \subsubsection{State maintenance}
 % % TODO add React.memo link
@@ -67,7 +67,7 @@ While it would be possible to drag the entire blocks around the application wind
 This is solved in the \textit{Editor} application by collapsing all the blocks when the drag\&drop action is initiated.
 This helps the user to focus on the actual meaning of the reordering action, and not on the content of the blocks.
 
-The implementation of the drag\&drop feature is based on the \texttt{react-dnd} library.
+The implementation of the drag\&drop feature is based on the \texttt{react-dnd}\footnote{\url{https://react-dnd.github.io/react-dnd/}} library.
 While the authors of this library offer an official example of reordering a list of block elements, the \textit{Editor} implementation is not based on this example due to the mentioned features,
 which are not provided by the example solution.
 
@@ -79,3 +79,7 @@ While the user might set the types of the arguments themselves, the \textit{Edit
 For this reason, the \textit{Editor} application provides a prefilled list of arguments with the correct types and matching input elements,
 which correspond to the \textit{Playwright} \texttt{Page} class methods and present the correct usage of the arguments to the user.
 The range of optional arguments is hand-picked for every command to provide the best variability while still maintaining an exceptional level of user-friendliness.
+
+\subsubsection{Real-time validation}
+On top of the mentioned argument type suggestion feature, the \textit{Editor} application also validates most of the user inputs based on their context in the workflow definition.
+Just like the previously mentioned features, the only purpose of this is enhancement of \acs{UX} and a user guide; a workflow definition with inputs marked as invalid still can be executed.

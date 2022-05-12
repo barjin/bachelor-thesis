@@ -23,7 +23,7 @@ Implementing the \textit{Editor} as a client-side web application in JavaScript 
 Client-side web applications are now seldom developed using plain JavaScript - most developers utilize frontend frameworks and libraries for easier manipulation with the \ac{DOM} tree and state management \citepalias{StateOfFtd20}.
 
 According to a popular 2021 JavaScript developer survey \citepalias{StateOfJS21}, the most popular \ac{JS} frontend frameworks among developers are \textit{React}, \textit{Angular} and \textit{Vue.js}.
-While the popularity of the tools changes over time with new emerging technologies coming every year, because of their large following, the aforementioned tools have a large number of third-party libraries 
+While the popularity of the tools changes over time with new emerging technologies coming every year, the aforementioned tools have the largest number of third-party libraries because of their large following.
 and modules.
 
 When comparing the frameworks against each other, \textit{React} comes off as the framework with the steepest learning curve while being only slightly less popular than \textit{Vue.js}, based on the GitHub stars of the project \citepalias{AnReVue22}.
@@ -60,7 +60,7 @@ Choosing to load an existing automation file opens a file selection dialog, allo
     \end{center}
     \caption{Validation error message}\label{fig:editor-load}
 \end{figure}
-While creating a new blank file immediately opens the \textit{Editor} application, an uploaded file needs to be validated first - in accordance with the \hyperref[requirements]{functional requirement} 1.2.1.1.2.
+While creating a new blank file immediately opens the \textit{Editor} application, an uploaded file needs to be validated first - in accordance with the \hyperref[requirements]{functional requirement} 1.2.1.1.3.
 If the provided file is not a valid workflow definition file, the user should be notified (\autoref{fig:editor-load}) and the application should remain open, allowing the user to provide different file or to create a new blank file.
 
 \begin{figure}[h!]
@@ -74,7 +74,7 @@ After successfully opening a workflow definition file, the user is presented wit
 Here, the user can edit the workflow definition file using a \ac{GUI} editor - in the \autoref{fig:editor-workflow}, the workflow is presented in the left column.
 
 The workflow editor contains a number of \ac{GUI} elements allowing the user to edit the workflow definition file in an intuitive way.
-All the actions performed by the user using these tools maintain the proper workflow definition syntax, as required by the \hyperref[requirements]{functional requirement} 1.2.1.1.3.
+All the actions performed by the user using these tools maintain the proper workflow definition syntax, as required by the \hyperref[requirements]{functional requirement} 1.2.1.1.4.
 
 The hierarchical structure of the workflow definition file allows us to present the workflow in a tree-like, collapsible structure, further enhancing the \ac{UX} of the application.
 
@@ -87,7 +87,7 @@ The hierarchical structure of the workflow definition file allows us to present 
 \clearpage
 
 After finishing the editing of the workflow definition file, the user can test the workflow by clicking the \textit{Run} button.
-While this is not required by any of the \hyperref[requirements]{functional requirements}, it is a crucial feature for an editor to have.
+This follows the \hyperref[requirements]{functional requirement} 1.2.1.1.6 on the \textit{Runner} interface.
 
 In the \autoref{fig:editor-run}, the execution control buttons are located above the workflow editor column. 
 The browser window showing the progress of the automation is in the right half of the screen.

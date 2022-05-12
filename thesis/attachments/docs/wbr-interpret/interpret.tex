@@ -25,13 +25,17 @@ All of the following fields are optional, as is the whole object.
       This option defaults to \texttt{5}. Setting this option to \texttt{null} disables the concurrency limit. 
       This can lead to overloading the browser and thus to a browser crash.
    \end{itemize}
-   \item \texttt{serializableCallback: (output: any) => (void | Promise<void>)}
+   \item \begin{verbatim}
+serializableCallback: (output: any) 
+                                => (void | Promise<void>)\end{verbatim}
    \begin{itemize}
       \item The function called when a serializable output is received from the browser.
       An object is \textit{Serializable} iff \texttt{JSON.stringify} can be called on it without throwing an exception.
       Defaults to \texttt{console.log}.
    \end{itemize}
-   \item \texttt{binaryCallback: (output: any, mimeType: string) => (void | Promise<void>)}
+   \item \begin{verbatim}
+binaryCallback: (output: any, mimeType: string) 
+                                => (void | Promise<void>)\end{verbatim}
    \begin{itemize}
       \item The function called when a non-serializable output is received from the browser.
       The data is accompanied by its \textit{MIME} type passed in \texttt{mimeType} parameter.
