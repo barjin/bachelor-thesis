@@ -10,8 +10,6 @@ Aside from this, this section also contains installation instructions for the \t
 
 \subsection{Editor application}
 
-% TODO: initial words
-
 \subsubsection{Installation instructions}
 
 The \textit{Editor} and \textit{Runner} application are both packaged in the \href{https://www.docker.com/}{Docker} image \texttt{barjin/wbr}.
@@ -40,7 +38,7 @@ Please note that the \textit{Editor} application allows the users to run arbitra
 This is a security risk, and the user is advised to only share their instance of \textit{Editor} server with trusted users.
 
 \subsubsection{Build instructions}
-Besides the \textit{Docker} image, all the software source files are also available in the project's GitHub repository.\footnote{Tag \texttt{v1.0}, commit hash \texttt{bf45528225e3b9fc05963d75}}
+Besides the \textit{Docker} image, all the software source files are also available in the project's \href{https://github.com/barjin/wbr/}{GitHub repository}.\footnote{\githubInfo}
 
 The \texttt{package.json} files for the packages \texttt{wbr-interpret}, \texttt{wbr-editor} and \texttt{wbr-cloud} contain the build instructions for the respective applications,
 as well as the required dependencies.
@@ -63,3 +61,6 @@ It also constructs a dependency graph of the source packages by reading their \t
 
 The \texttt{turbo} build is invoked by the \texttt{npm run build} command in the root folder of the repository.
 Invoking the \texttt{npm start} command in the root folder of the repository after the build starts the \textit{Editor} application server.
+
+While the build process has been made to be as streamlined as possible, the author of this work gives no guarantees about the build process.
+Use the official \textit{Docker} image when possible.

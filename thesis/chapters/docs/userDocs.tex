@@ -24,7 +24,7 @@ The functionality of those automations relies on the state of the targetted thir
 
 \begin{figure}[!h]
     \begin{center}
-        \fbox{\includegraphics[width=0.75\textwidth]{./img/tutorial/initial.png}}
+        \fbox{\includegraphics[width=0.7\textwidth]{./img/tutorial/initial.png}}
     \end{center}
     \caption{The initial screen}
 \end{figure}
@@ -65,7 +65,6 @@ The automation interpreter is able to find the matching condition for the curren
 
 The pair's \textit{Condition} is displayed under the section ``If'' in the workflow editor.
 The condition is defined as a possibly nested tree of simple condition expressions and logical operators.
-
 By default, the condition consists of the (invisible) top-level \texttt{\$and} operator.
 This operator is used to combine the first-level conditions - all of the provided conditions must be true for the pair to be true.
 Not specifying any conditions will result in creating an empty clause - a condition that is always true.
@@ -86,18 +85,14 @@ All of the inserted conditions provide the correct type and related input elemen
 
 Adding a new condition from the presented dropdown menu will result in inserting a new ``neighbor'' condition of the \texttt{url} condition.
 This, together with the top-level \texttt{\$and} operator, results in an combined condition, which is evaluated to true if all of the nested conditions is true.
-
 The dropdown menu also allows the user to insert a nested logic operator (\texttt{\$and} or \texttt{\$or}).
-This enables the user to combine conditions in a more complex way.
 
 \subsubsection{Reordering the rules}
     The order of the pairs in the workflow definition file is important.
-    The workflow interpreter will evaluate the pairs in the order of the pairs in the workflow definition file
-    and match the first pair that is true.
+    The workflow interpreter will evaluate the pairs in the order of the pairs in the workflow definition file and match the first pair that is true.
 
-    This means that the order of the pairs in the workflow definition actually corresponds to the priority of their conditions.
+    This means that the order of the pairs in the workflow definition corresponds to the priority of their conditions.
     The more specific the condition, the higher it should be placed in the workflow definition file, so it does not get overshadowed by other, possibly more general, pairs.
-
     The pairs can be reordered using a drag and drop interface.
 
 \subsubsection{Adding the actions}
@@ -134,6 +129,7 @@ Additional information about the execution is displayed in the console below the
 To further facilitate the automation debugging, the \textit{Editor} also highlights the currently matched pair in the workflow definition section.
 
 To ensure consistency, any update to the workflow definition made during the workflow execution will stop the automation execution.
+The execution can be also stopped manually by clicking the \texttt{'Stop'} button in right part of the control panel.
 
 \begin{figure}[!h]
     \begin{center}

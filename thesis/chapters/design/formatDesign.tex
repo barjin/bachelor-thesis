@@ -108,13 +108,17 @@ Please note that in this case, the \textit{Prolog} interpreter is actually takin
 
 \multilinebox{
     \smallskip
-    \textbf{Note:} This example also shows that the new state of the browser depends only on the preceding one. 
+    \textbf{Note:} The examples above also show that the new state of the browser depends only on the preceding one. 
     
     Such quality, also called \textit{memorylessness}, or \textit{Markov property}, simplifies both the runner design and the programming concept itself.
     It might also allow for some optimizations utilizing parallel execution. 
     \smallskip
 }
 
+As mentioned in the \hyperref[intro]{Introduction}, the workflow definition format should be application oblivious, 
+allowing other developers to use it in their own automation tools. 
+For this reason, the action names are not part of the format definition.
+\clearpage
 \subsection{Serialization}
 
 \defcitealias{GTrends22}{GTrends22}
@@ -135,8 +139,6 @@ While improving the file legibility, the indentation oriented nature of YAML mak
 For the reasons mentioned, the workflow definition format will be built upon JSON - a host format providing a simple, human-readable serialization for a structured schema of the definitions.
 
 The JSON serialization of the workflow definition file might then look as follows:
-
-\emptyline
 
 \begin{minipage}{0.95\linewidth}
 \begin{lstlisting}[language=json, columns=spaceflexible]
@@ -191,14 +193,13 @@ Following another popular format based on JSON (or rather JavaScript objects), t
 In this query language, boolean operations are expressed using an object with a specific key, containing an array of operand objects.
 
 \begin{center}
-\begin{minipage}{0.95\linewidth}
-    \begin{verbatim}
+    \verb|{ $and: [{expression},{expression},...] }|
+    \smallskip
 
-{$and: [{expression},{expression},...]}
-{$or:  [{expression},{expression},...]}
-{$not: {expression}}
-    \end{verbatim}
-\end{minipage}
+    \verb|{ $or:  [{expression},{expression},...] }|
+    \smallskip
+
+    \verb|{ $not: {expression} }|
 \end{center}
 
 This approach has a direct mapping to JSON syntax, which makes it very suitable for our use case.
@@ -223,7 +224,8 @@ This approach has a direct mapping to JSON syntax, which makes it very suitable 
 
 Because of the associativity of those operations, the representation of the boolean operators AND and OR can have arbitrary arity.
 Writing an empty \texttt{\$and} or \texttt{\$or} clause corresponds to an empty rule. 
-Specifying only one subrule (using \texttt{\$and}/\texttt{\$or} as unary operators) defies the purpose of using those operators. 
+Specifying only one subrule (using \texttt{\$and}/\texttt{\$or} as unary operators) defies the purpose of using those operators, as the truth value is the same as of the inner condition alone.
+
 With this being said, the format does not specify a required operator arity. 
 
 \subsubsection{Regular expressions}
@@ -259,11 +261,11 @@ Therefore, storing the expressions as strings is the most fluent option.
 
 \subsection{Validation}
 
-The GitHub repository of the project contains JSON Schema\footnote{\href{https://github.com/barjin/wbr/blob/main/json-schema.json}{https://github.com/barjin/wbr/blob/main/json-schema.json}} for validating the workflow definition,
+The GitHub repository of the project contains \href{https://github.com/barjin/wbr/blob/main/json-schema.json}{JSON Schema}\footnote{\href{https://github.com/barjin/wbr/blob/main/json-schema.json}{https://github.com/barjin/wbr/blob/main/json-schema.json}} for validating the workflow definition,
 as it is implemented by the \textit{Runner} and \textit{Editor} modules. 
 This slightly differs from the format definition described in the previous sections, though only by naming - the \texttt{condition} part is called \texttt{where}, the action part is called \texttt{what}.
 The workflow definition can be also optionally prepended by \texttt{meta} object, containing the workflow's name and description.
-The format documentation\footnote{\href{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}} published there also describes 
+The \href{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}{format documentation}\footnote{\href{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}{https://github.com/barjin/wbr/blob/main/docs/wbr-interpret/waw\_definition.md}} published there also describes 
 the format of the workflow definition file in a similar manner as the chapter before. 
 
 The rest of the documentation published in the GitHub repository describes basics of workflow creation and execution using the workflow definition format.

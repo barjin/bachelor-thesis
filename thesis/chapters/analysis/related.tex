@@ -8,7 +8,7 @@ As of now, there are already numerous solutions for automating web actions on th
 A majority of those uses existing web browsers and offer a programmable interface for simulating user input.
 
 \subsection{Evaluation criteria}
-To provide a comprehensive comparison, the existing solutions will be evaluated based on several common criteria. Those are:
+To provide a comprehensive comparison, the existing solutions will be evaluated based on several common criteria.
 \begin{enumerate}
     \item \textbf{Ease of use}: \Ac{UX} quality, evaluated based on different user knowledge levels.
     \item \textbf{Universality}: How applicable is this solution for different web automation use cases, i.e. \ac{UI} testing, web scraping, web crawling and other.
@@ -17,12 +17,11 @@ To provide a comprehensive comparison, the existing solutions will be evaluated 
 \end{enumerate}
 
 An universal, open and automation tool should provide all of those qualities. 
-Designing such a tool is the ultimate goal of this work.
 
 \subsection{Programming-based solutions}
 
 In general, the existing automation solutions can be divided into two groups, based on the \ac{UX} quality and granularity of supported actions. 
-The first group consists of programmable solutions targetted at experienced users:
+The first group consists of programmable solutions targetted at experienced users.
 
 \emptyline
 
@@ -36,8 +35,9 @@ Due to its strong orientation towards testing, it does not provide much methods 
     \item Automation resilience -
     Since Cypress has been designed as a testing framework, i.e. to be used on one's own infrastructure, there is no inbuilt support for handling unexpected states.
     The official documentation speaks about modifying the (tested) server itself and explains the usual ways of handling exceptions in JavaScript. \citepalias{CyprCond}
-    \item Open format - The automations written using Cypress are effectively JS programs stored as source code.
+    \item Open format - The automations written in Cypress are \acs{JS} programs.
 \end{itemize}
+\clearpage
 
 \textbf{Selenium WebDriver} is a fairly popular tool among web UI testers, as it offers a wide variety of selector engines and comprehensive method naming.
 Distributed as a multilanguage library, Selenium implements a high-level interface for controlling web browsers from code.
@@ -90,7 +90,7 @@ Stock versions of Chromium-based browsers (Google Chrome, Microsoft Edge) are su
     
     Just like Puppeteer, Playwright also lacks content-oriented high-level abstractions for scraping or crawling the web. Again, those must be implemented by the user or imported from third-party libraries.
     
-    Unlike Puppeteer, TS/JS version of Playwright comes with Playwright Test, a simple test-runner using a Jest-inspired syntax.
+    Unlike Puppeteer, \acs{TS}/\acs{JS} version of Playwright comes with Playwright Test, a simple test-runner using a Jest-inspired syntax.
 
     \item Automation resilience -
     The Playwright library does not provide decision-making algorithms capable of handling unexpected states.
